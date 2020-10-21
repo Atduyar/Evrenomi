@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "Kayıt Ol";
+    ViewData["Header"] = "Kayıt Ol";
+}
+
+@section Scripts {
+    <script src="~/js/register.js" asp-append-version="true"></script>
+
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 well">
+
+            <div class="form-group">
+                <label>E-posta</label>
+                <input type="email" class="form-control" id="email" placeholder="E-posta">
+            </div>
+            <div class="form-group">
+                <label>Kullanıcı Adı</label>
+                <input type="text" class="form-control" id="nickname" placeholder="Kullanıcı Adı">
+            </div>
+            <div class="form-group">
+                <label>Şifre</label>
+                <input type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <button id="registerBtn" class="btn btn-primary btn-block">Kayıt Ol</button>
+
+        </div>
+        <div class="col-md-6 col-md-offset-3 well">
+            <h1>Test</h1>
+        </div>
+    </div>
+</div>
