@@ -1,9 +1,12 @@
 ### Hi there, I'm Ahmet Tarık DUYAR [Atduyar](api.atduyar.com/api/admin/testgetcomment) 👋
 
 ## Api auth methods
-| HTTP Methods|Url|Response|
+| HTTP Methods|Url|Response|Response|
 |:---:|:---:|:---:|
-|**GET**|/auth/login|userforlogin|
+|**AUTH**|
+|**POST**|/auth/login|Token|UserForLogin|
+|**POST**|/auth/register|Token|UserForRegister|
+|**POST**|/auth/register|Token|UserForRegister|
 
 
 
