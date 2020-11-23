@@ -3,7 +3,7 @@
 ## Api auth methods
 | HTTP Methods|Url|Response|Response|
 |:---:|:---:|:---:|
-|**AUTH**|
+|**AUTH**||||
 |**POST**|/auth/login|Token|UserForLogin|
 |**POST**|/auth/register|Token|UserForRegister|
 |**POST**|/auth/register|Token|UserForRegister|
