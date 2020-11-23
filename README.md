@@ -28,10 +28,10 @@
 |string|EmailOrNickname|Yes|45|3|
 |string|Password|Yes|20|8|
 '''
-\{
+/{
     "emailOrNickname":"test@gmail.com",
     "password":"12345678",
-\}
+/}
 '''
 
 <br />
