@@ -4,8 +4,8 @@
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**AUTH**|
-|**POST**|/auth/login||Token|UserForLogin|
-|**POST**|/auth/register||Token|UserForRegister|
+|**POST**|/auth/login||Token|UserForLoginDto|
+|**POST**|/auth/register||Token|UserForRegisterDto|
 |**ADMİN**|
 |**POST**|/admin/setOperationClaimToUser|Admin|OK|operationClaimToUserDto|
 |**POST**|/admin/deleteOperationClaimToUser|Admin|OK|operationClaimToUserDto|
@@ -14,14 +14,25 @@
 |**GET**|/tests/auth|Authorize|"Sen Giris Yapmıs Sın"||
 |**POST**|/tests/postUser|Authorize|"NickName = {Nickname} Email = {Email} :D"|UserForRegisterDto|
 |**GET**|/tests/getUser|Authorize||UserForRegisterDto|
+|**GET**|/tests/getUserId|Authorize||"Sen in id'in = {Id} :D"|
 |**POST**|/tests/postComment||Comment|Comment|
 |**GET**|/tests/getComment|||Comment|
-|**GET**|/tests/getUserId|Authorize||"Sen in id'in = {Id} :D"|
 |**GET**|/tests/ok|||Comment|
 |**GET**|/tests/badRequest|||400(Comment)|
 
 
+## Api DTO(data transform object)
 
+|UserForLogin||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|string|EmailOrNickname|Yes|45|3|
+|string|Password|Yes|20|8|
+'''
+{
+    "emailOrNickname":"test@gmail.com",
+    "password":"12345678",
+}
+'''
 
 <br />
 <br />
