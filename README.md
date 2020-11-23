@@ -1,16 +1,24 @@
 ### Hi there, I'm Ahmet Tarık DUYAR [Atduyar](api.atduyar.com/api/admin/testgetcomment) 👋
 
 ## Api Methods
-| HTTP Methods|Url|Response|Response|
-|:---:|:---:|:---:|:---:|
+| HTTP Methods|Url|Authorize|Response|Request|
+|:---:|:---:|:---:|:---:|:---:|
 |**AUTH**|
-|**POST**|/auth/login|Token|UserForLogin|
-|**POST**|/auth/register|Token|UserForRegister|
+|**POST**|/auth/login||Token|UserForLogin|
+|**POST**|/auth/register||Token|UserForRegister|
 |**ADMİN**|
-|**POST**|/admin/setOperationClaimToUser|OK|operationClaimToUserDto|
-|**POST**|/admin/deleteOperationClaimToUser|OK|operationClaimToUserDto|
+|**POST**|/admin/setOperationClaimToUser|Admin|OK|operationClaimToUserDto|
+|**POST**|/admin/deleteOperationClaimToUser|Admin|OK|operationClaimToUserDto|
 |**TEST**|
-|**POST**|/tests/|||
+|**GET**|/tests/admin|Admin|"Sen Admin Sin"||
+|**GET**|/tests/auth|Authorize|"Sen Giris Yapmıs Sın"||
+|**POST**|/tests/postUser|Authorize|"NickName = {Nickname} Email = {Email} :D"|UserForRegisterDto|
+|**GET**|/tests/getUser|Authorize||UserForRegisterDto|
+|**POST**|/tests/postComment||Comment|Comment|
+|**GET**|/tests/getComment|||Comment|
+|**GET**|/tests/getUserId|Authorize||"Sen in id'in = {Id} :D"|
+|**GET**|/tests/ok|||Comment|
+|**GET**|/tests/badRequest|||400(Comment)|
 
 
 
