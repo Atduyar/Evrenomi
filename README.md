@@ -20,8 +20,22 @@
 |**GET**|/tests/ok|||Comment|
 |**GET**|/tests/badRequest|||400(Comment)|
 
+---
+<br />
 
 ## Api DTO(data transform object)
+
+|Comment||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|string|text||||
+
+```
+{
+    "text":"Merhaba Dünya."
+}
+```
+
+<br />
 
 |UserForLogin||Required|Max|Min|
 |:---:|:---:|:---:|:---:|:---:|
@@ -34,6 +48,77 @@
     "password":"12345678",
 }
 ```
+<br />
+
+
+|UserForRegisterDto||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|string|Nickname|Yes|20|3|
+|string|Email|Yes|45|10|
+|string|Password|Yes|20|8|
+
+```
+{
+    "email":"test@gmail.com",
+    "password":"12345678",
+    "nickName":"Test"
+}
+```
+
+<br />
+
+|ErrorResponseDto||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|string|Operation||||
+|string|ErrorMessages||||
+
+```
+{
+    "operation": "Register",
+    "errorMessages": "Kullanıcı Zaten Kayıtlı"
+}
+```
+
+
+<br />
+
+|OperationClaim||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|int|Id||||
+|string|Name||||
+
+```
+{
+    "id": "1",
+    "name": "Admin"
+}
+```
+
+<br />
+
+|OperationClaimToUserDto||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|UserForLoginDto|userForLoginDto||||
+|OperationClaim|operationClaim||||
+
+```
+{
+    "userForLoginDto":{
+        "email":"test@gmail.com",
+        "password":"12345678"
+    },
+    "operationClaim":{
+        "id":1,
+        "name":"Admin"
+    }
+}
+```
+
+
+
+
+
+
 <br />
 <br />
 <br />
