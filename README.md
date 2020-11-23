@@ -6,9 +6,11 @@
 |**AUTH**|
 |**POST**|/auth/login|Token|UserForLogin|
 |**POST**|/auth/register|Token|UserForRegister|
-|**POST**|/auth/register|Token|UserForRegister|
 |**ADMİN**|
+|**POST**|/admin/setOperationClaimToUser|OK|operationClaimToUserDto|
+|**POST**|/admin/deleteOperationClaimToUser|OK|operationClaimToUserDto|
 |**TEST**|
+|**POST**|/tests/|||
 
 
 
