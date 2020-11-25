@@ -20,7 +20,7 @@
 |**GET**|/tests/ok|||[Comment](#comment)|
 |**GET**|/tests/badRequest|||400([Comment](#comment))|
 |**BLOGS**|
-|**POST**|/blogs/getall||[BlogSummaryDto](#BlogSummaryDto)||
+|**GET**|/blogs/getall||[BlogSummaryDto](#BlogSummaryDto)||
 
 ---
 <br />
