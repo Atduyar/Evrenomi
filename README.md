@@ -19,6 +19,8 @@
 |**GET**|/tests/getComment|||Comment|
 |**GET**|/tests/ok|||Comment|
 |**GET**|/tests/badRequest|||400(Comment)|
+|**BLOGS**|
+|**POST**|/blogs/getall||BlogSummaryDto||
 
 ---
 <br />
@@ -113,8 +115,28 @@
     }
 }
 ```
+<br />
 
----
+|BlogSummaryDto||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|int|BlogId||||
+|string|AuthorName||||
+|string|BlogTitle||||
+|string|BlogTitlePhotoUrl||||
+|string|BlogTags||||
+|string|BlogDate||||
+
+```
+{
+    "blogId": 1,
+    "authorName": "Azathoth",
+    "blogTitle": "Baskık",
+    "blogTitlePhotoUrl": "url",
+    "blogTags": "bilim",
+    "blogDate": "2020-01-11T00:00:00"
+}
+```
+
 
 
 
