@@ -18,7 +18,7 @@
 |**POST**|/tests/postComment||[Comment](#comment)|[Comment](#comment)|
 |**GET**|/tests/getComment|||[Comment](#comment)|
 |**GET**|/tests/ok|||[Comment](#comment)|
-|**GET**|/tests/badRequest|||400(Comment)|
+|**GET**|/tests/badRequest|||400([Comment](#comment))|
 |**BLOGS**|
 |**POST**|/blogs/getall||[BlogSummaryDto](#BlogSummaryDto)||
 
@@ -26,6 +26,7 @@
 <br />
 
 ## Api DTO(data transform object)
+**[Token](#Token)**
 **[Comment](#comment)**
 **[UserForLogin](#UserForLogin)**
 **[UserForRegisterDto](#UserForRegisterDto)**
@@ -35,6 +36,21 @@
 **[BlogSummaryDto](#BlogSummaryDto)**
 
 
+
+## Token
+|Token||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|string|token||||
+|DateTime|expiration||||
+
+```
+{
+    "token": "eyJhbGciOiJodH...",
+    "expiration": "2020-11-25T18:09:24.5477551+03:00"
+}
+```
+
+<br />
 
 ## Comment
 |Comment||Required|Max|Min|
