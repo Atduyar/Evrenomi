@@ -4,29 +4,35 @@
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**AUTH**|
-|**POST**|/auth/login||Token|UserForLoginDto|
-|**POST**|/auth/register||Token|UserForRegisterDto|
+|**POST**|/auth/login||Token|[UserForLogin](#UserForLogin)|
+|**POST**|/auth/register||Token|[UserForRegisterDto](#UserForRegisterDto)|
 |**ADMİN**|
-|**POST**|/admin/setOperationClaimToUser|Admin|OK|operationClaimToUserDto|
-|**POST**|/admin/deleteOperationClaimToUser|Admin|OK|operationClaimToUserDto|
+|**POST**|/admin/setOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
+|**POST**|/admin/deleteOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
 |**TEST**|
 |**GET**|/tests/admin|Admin|"Sen Admin Sin"||
 |**GET**|/tests/auth|Authorize|"Sen Giris Yapmıs Sın"||
-|**POST**|/tests/postUser|Authorize|"NickName = {Nickname} Email = {Email} :D"|UserForRegisterDto|
-|**GET**|/tests/getUser|Authorize||UserForRegisterDto|
+|**POST**|/tests/postUser|Authorize|"NickName = {Nickname} Email = {Email} :D"|[UserForRegisterDto](#UserForRegisterDto)|
+|**GET**|/tests/getUser|Authorize||[UserForRegisterDto](#UserForRegisterDto)|
 |**GET**|/tests/getUserId|Authorize||"Sen in id'in = {Id} :D"|
-|**POST**|/tests/postComment||Comment|Comment|
-|**GET**|/tests/getComment|||Comment|
-|**GET**|/tests/ok|||Comment|
+|**POST**|/tests/postComment||[Comment](#comment)|[Comment](#comment)|
+|**GET**|/tests/getComment|||[Comment](#comment)|
+|**GET**|/tests/ok|||[Comment](#comment)|
 |**GET**|/tests/badRequest|||400(Comment)|
 |**BLOGS**|
-|**POST**|/blogs/getall||BlogSummaryDto||
+|**POST**|/blogs/getall||[BlogSummaryDto](#BlogSummaryDto)||
 
 ---
 <br />
 
 ## Api DTO(data transform object)
 **[Comment](#comment)**
+**[UserForLogin](#UserForLogin)**
+**[UserForRegisterDto](#UserForRegisterDto)**
+**[ErrorResponseDto](#ErrorResponseDto)**
+**[OperationClaim](#OperationClaim)**
+**[OperationClaimToUserDto](#OperationClaimToUserDto)**
+**[BlogSummaryDto](#BlogSummaryDto)**
 
 
 
@@ -43,6 +49,7 @@
 
 <br />
 
+## UserForLogin
 |UserForLogin||Required|Max|Min|
 |:---:|:---:|:---:|:---:|:---:|
 |string|EmailOrNickname|Yes|45|3|
@@ -57,6 +64,7 @@
 <br />
 
 
+## UserForRegisterDto
 |UserForRegisterDto||Required|Max|Min|
 |:---:|:---:|:---:|:---:|:---:|
 |string|Nickname|Yes|20|3|
@@ -73,6 +81,7 @@
 
 <br />
 
+## ErrorResponseDto
 |ErrorResponseDto||Required|Max|Min|
 |:---:|:---:|:---:|:---:|:---:|
 |string|Operation||||
@@ -88,6 +97,7 @@
 
 <br />
 
+## OperationClaim
 |OperationClaim||Required|Max|Min|
 |:---:|:---:|:---:|:---:|:---:|
 |int|Id||||
@@ -102,6 +112,7 @@
 
 <br />
 
+## OperationClaimToUserDto
 |OperationClaimToUserDto||Required|Max|Min|
 |:---:|:---:|:---:|:---:|:---:|
 |UserForLoginDto|userForLoginDto||||
@@ -121,6 +132,7 @@
 ```
 <br />
 
+## BlogSummaryDto
 |BlogSummaryDto||Required|Max|Min|
 |:---:|:---:|:---:|:---:|:---:|
 |int|BlogId||||
