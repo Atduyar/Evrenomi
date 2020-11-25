@@ -4,8 +4,8 @@
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**AUTH**|
-|**POST**|/auth/login||Token|[UserForLogin](#UserForLogin)|
-|**POST**|/auth/register||Token|[UserForRegisterDto](#UserForRegisterDto)|
+|**POST**|/auth/login||[Token](#Token)|[UserForLogin](#UserForLogin)|
+|**POST**|/auth/register||[Token](#Token)|[UserForRegisterDto](#UserForRegisterDto)|
 |**ADMİN**|
 |**POST**|/admin/setOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
 |**POST**|/admin/deleteOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
@@ -25,17 +25,17 @@
 ---
 <br />
 
-## Api DTO(data transform object)
-**[Token](#Token)**
-**[Comment](#comment)**
-**[UserForLogin](#UserForLogin)**
-**[UserForRegisterDto](#UserForRegisterDto)**
-**[ErrorResponseDto](#ErrorResponseDto)**
-**[OperationClaim](#OperationClaim)**
-**[OperationClaimToUserDto](#OperationClaimToUserDto)**
-**[BlogSummaryDto](#BlogSummaryDto)**
+## Api DTO(data transform object)<br />
+**[Token](#Token)**<br />
+**[Comment](#comment)**<br />
+**[UserForLogin](#UserForLogin)**<br />
+**[UserForRegisterDto](#UserForRegisterDto)**<br />
+**[ErrorResponseDto](#ErrorResponseDto)**<br />
+**[OperationClaim](#OperationClaim)**<br />
+**[OperationClaimToUserDto](#OperationClaimToUserDto)**<br />
+**[BlogSummaryDto](#BlogSummaryDto)**<br />
 
-
+<br />
 
 ## Token
 |Token||Required|Max|Min|
