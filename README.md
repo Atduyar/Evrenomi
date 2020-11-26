@@ -21,6 +21,8 @@
 |**GET**|/tests/badRequest|||400([Comment](#comment))|
 |**BLOGS**|
 |**GET**|/blogs/getall||[BlogSummaryDto](#BlogSummaryDto)||
+|**USER**|
+|**GET**|/blogs/getMyProfil||[UserDetailDto](#UserDetailDto)||
 
 ---
 <br />
@@ -34,6 +36,7 @@
 **[OperationClaim](#OperationClaim)**<br />
 **[OperationClaimToUserDto](#OperationClaimToUserDto)**<br />
 **[BlogSummaryDto](#BlogSummaryDto)**<br />
+**[UserDetailDto](#UserDetailDto)**<br />
 
 <br />
 
@@ -166,6 +169,30 @@
     "blogTitlePhotoUrl": "url",
     "blogTags": "bilim",
     "blogDate": "2020-01-11T00:00:00"
+}
+```
+<br />
+
+## UserDetailDto
+|UserDetailDto||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|int|Id||||
+|string|Nickname||||
+|string|FirstName||||
+|string|LastName||||
+|string|Email||||
+|string|AvatarUrl||||
+|string|Description||||
+
+```
+{
+    "Id": 1,
+    "Nickname": "Azathoth",
+    "FirstName": "Test",
+    "LastName": "Metod",
+    "Email": "test@gmail.com",
+    "AvatarUrl": "url"
+    "Description": "Ben bu siteye katıt oldum"
 }
 ```
 
