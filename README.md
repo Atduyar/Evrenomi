@@ -10,7 +10,7 @@
 |**POST**|/admin/setOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
 |**POST**|/admin/deleteOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
 |**GET**|/admin/getUser|Admin|[UserDetailDto](#UserDetailDto)|?id=(int)|
-|**GET**|/admin/getAllUser|Admin|[UserSummaryDto](#UserSummaryDto)||
+|**GET**|/admin/getAllUser|Admin|List<[UserSummaryDto](#UserSummaryDto)>||
 |**TEST**|
 |**GET**|/tests/admin|Admin|"Sen Admin Sin"||
 |**GET**|/tests/auth|Authorize|"Sen Giris Yapmıs Sın"||
@@ -22,7 +22,7 @@
 |**GET**|/tests/ok|||[Comment](#comment)|
 |**GET**|/tests/badRequest|||400([Comment](#comment))|
 |**BLOGS**|
-|**GET**|/blogs/getall||[BlogSummaryDto](#BlogSummaryDto)||
+|**GET**|/blogs/getall||List<[BlogSummaryDto](#BlogSummaryDto)>||
 |**USER**|
 |**GET**|/users/getMyProfil|Me|[UserDetailDto](#UserDetailDto)||
 
