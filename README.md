@@ -9,14 +9,14 @@
 **[TEST](#TEST)**<br />
 
 
-##AUTH
+## AUTH
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**POST**|/auth/login||[Token](#Token)|[UserForLogin](#UserForLogin)|
 |**POST**|/auth/register||[Token](#Token)|[UserForRegisterDto](#UserForRegisterDto)|
 
 
-##ADMİN
+## ADMİN
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**POST**|/admin/setOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
@@ -25,19 +25,19 @@
 |**GET**|/admin/getAllUser|Admin|List<[UserSummaryDto](#UserSummaryDto)>||
 
 
-##BLOGS
+## BLOGS
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/blogs/getall||List<[BlogSummaryDto](#BlogSummaryDto)>||
 
 
-##USER
+## USER
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/users/getMyProfil|Me|[UserDetailDto](#UserDetailDto)||
 
 
-##TEST
+## TEST
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/tests/admin|Admin|"Sen Admin Sin"||
