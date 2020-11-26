@@ -9,6 +9,8 @@
 |**ADMİN**|
 |**POST**|/admin/setOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
 |**POST**|/admin/deleteOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
+|**GET**|/admin/getUser|Admin|[UserDetailDto](#UserDetailDto)|?id=(int)|
+|**GET**|/admin/getAllUser|Admin|[UserSummaryDto](#UserSummaryDto)||
 |**TEST**|
 |**GET**|/tests/admin|Admin|"Sen Admin Sin"||
 |**GET**|/tests/auth|Authorize|"Sen Giris Yapmıs Sın"||
@@ -37,6 +39,7 @@
 **[OperationClaimToUserDto](#OperationClaimToUserDto)**<br />
 **[BlogSummaryDto](#BlogSummaryDto)**<br />
 **[UserDetailDto](#UserDetailDto)**<br />
+**[UserSummaryDto](#UserSummaryDto)**<br />
 
 <br />
 
@@ -196,6 +199,22 @@
 }
 ```
 
+<br />
+
+## UserSummaryDto
+|UserSummaryDto||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|int|Id||||
+|string|Nickname||||
+|string|AvatarUrl||||
+
+```
+{
+    "Id": 1,
+    "Nickname": "Azathoth",
+    "AvatarUrl": "url"
+}
+```
 
 
 
