@@ -35,6 +35,7 @@
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/users/getMyProfil|Me|[UserDetailDto](#UserDetailDto)||
+|**GET**|/users/updateUser|Me|[UserDetailDto](#UserDetailDto)||
 
 
 ## TEST
