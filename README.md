@@ -1,14 +1,14 @@
 ### Hi there, I'm Ahmet Tarık DUYAR [Atduyar](api.atduyar.com/api/admin/testgetcomment) 👋
 
 ## Api Methods
+|**AUTH**|
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
-|**AUTH**|
 |**POST**|/auth/login||[Token](#Token)|[UserForLogin](#UserForLogin)|
 |**POST**|/auth/register||[Token](#Token)|[UserForRegisterDto](#UserForRegisterDto)|
 
 
-|**ADMİN**|||||
+|**ADMİN**|
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**POST**|/admin/setOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
@@ -17,19 +17,19 @@
 |**GET**|/admin/getAllUser|Admin|List<[UserSummaryDto](#UserSummaryDto)>||
 
 
-|**BLOGS**|||||
+|**BLOGS**|
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/blogs/getall||List<[BlogSummaryDto](#BlogSummaryDto)>||
 
 
-|**USER**|||||
+|**USER**|
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/users/getMyProfil|Me|[UserDetailDto](#UserDetailDto)||
 
 
-|**TEST**|||||
+|**TEST**|
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/tests/admin|Admin|"Sen Admin Sin"||
