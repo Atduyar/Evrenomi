@@ -22,7 +22,7 @@
 |**BLOGS**|
 |**GET**|/blogs/getall||[BlogSummaryDto](#BlogSummaryDto)||
 |**USER**|
-|**GET**|/blogs/getMyProfil|Me|[UserDetailDto](#UserDetailDto)||
+|**GET**|/users/getMyProfil|Me|[UserDetailDto](#UserDetailDto)||
 
 ---
 <br />
