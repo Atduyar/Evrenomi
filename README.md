@@ -1,14 +1,22 @@
 ### Hi there, I'm Ahmet Tarık DUYAR [Atduyar](api.atduyar.com/api/admin/testgetcomment) 👋
 
 ## Api Methods
-|**AUTH**|
+
+**[AUTH](#AUTH)**<br />
+**[ADMİN](#ADMİN)**<br />
+**[BLOGS](#BLOGS)**<br />
+**[USER](#USER)**<br />
+**[TEST](#TEST)**<br />
+
+
+###**AUTH**
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**POST**|/auth/login||[Token](#Token)|[UserForLogin](#UserForLogin)|
 |**POST**|/auth/register||[Token](#Token)|[UserForRegisterDto](#UserForRegisterDto)|
 
 
-|**ADMİN**|
+###**ADMİN**
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**POST**|/admin/setOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
@@ -23,13 +31,13 @@
 |**GET**|/blogs/getall||List<[BlogSummaryDto](#BlogSummaryDto)>||
 
 
-|**USER**|
+###**USER**
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/users/getMyProfil|Me|[UserDetailDto](#UserDetailDto)||
 
 
-|**TEST**|
+###**TEST**
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/tests/admin|Admin|"Sen Admin Sin"||
