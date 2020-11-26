@@ -48,8 +48,8 @@
 |**GET**|/tests/getUserId|Authorize||"Sen in id'in = {Id} :D"|
 |**POST**|/tests/postComment||[Comment](#comment)|[Comment](#comment)|
 |**GET**|/tests/getComment|||[Comment](#comment)|
-|**GET**|/tests/ok|||[Comment](#comment)|
-|**GET**|/tests/badRequest|||400([Comment](#comment))|
+|**GET**|/tests/okComment|||[Comment](#comment)|
+|**GET**|/tests/badRequestComment|||400([Comment](#comment))|
 
 
 
