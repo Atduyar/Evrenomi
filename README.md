@@ -29,6 +29,7 @@
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/blogs/getall||List<[BlogSummaryDto](#BlogSummaryDto)>||
+|**GET**|/blogs/getbypage||List<[BlogSummaryDto](#BlogSummaryDto)>|[BlogPageFilter](#BlogPageFilter)|
 
 
 ## USER
