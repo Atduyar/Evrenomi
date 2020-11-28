@@ -21,9 +21,11 @@
 |:---:|:---:|:---:|:---:|:---:|
 |**POST**|/admin/setOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
 |**POST**|/admin/deleteOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
+|**POST**|/admin/addAuthor|Admin||[AuthorForRegister](#AuthorForRegister)|
 |**GET**|/admin/getUser|Admin|[UserDetailDto](#UserDetailDto)|?userId=(int)|
 |**GET**|/admin/getAllUser|Admin|List<[UserSummaryDto](#UserSummaryDto)>||
-|**GET**|/admin/getAllBlog||List<[BlogSummaryDto](#BlogSummaryDto)>||
+|**GET**|/admin/getAllBlog|Admin|List<[BlogSummaryDto](#BlogSummaryDto)>||
+|**GET**|/admin/getAllBlogByStatus|Admin|List<[Blog](#BlogS)>|?status=(int)|
 
 
 ## BLOGS
