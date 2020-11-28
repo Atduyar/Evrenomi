@@ -189,6 +189,33 @@
 ```
 <br />
 
+## BlogDetailDto
+|BlogDetailDto||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|int|BlogId||||
+|int|authorId||||
+|string|blogDate||||
+|string|blogTitle||||
+|string|blogTitlePhotoUrl||||
+|string|BlogTblogSideTitleags||||
+|string|blogContent||||
+|string|blogTags||||
+
+```
+{
+    "blogId": 1,
+    "authorId": 1,
+    "blogDate": "2020-01-11T00:00:00",
+    "blogTitle": "Baskık",
+    "blogTitlePhotoUrl": "url",
+    "blogSideTitle": "BaskıkYan",
+    "blogContent": "Test yazisi 123",
+    "blogTags": "Bilim"
+}
+```
+
+<br />
+
 ## BlogSummaryDto
 |BlogSummaryDto||Required|Max|Min|
 |:---:|:---:|:---:|:---:|:---:|
