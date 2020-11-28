@@ -12,7 +12,7 @@
 ## AUTH
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
-|**POST**|/auth/login||[Token](#Token)|[UserForLogin](#UserForLogin)|
+|**POST**|/auth/login||[Token](#Token)|[UserForLoginDto](#UserForLoginDto)|
 |**POST**|/auth/register||[Token](#Token)|[UserForRegisterDto](#UserForRegisterDto)|
 
 
@@ -67,7 +67,7 @@
 ## Api DTO(data transform object)<br />
 **[Token](#Token)**<br />
 **[Comment](#comment)**<br />
-**[UserForLogin](#UserForLogin)**<br />
+**[UserForLoginDto](#UserForLoginDto)**<br />
 **[UserForRegisterDto](#UserForRegisterDto)**<br />
 **[ErrorResponseDto](#ErrorResponseDto)**<br />
 **[OperationClaim](#OperationClaim)**<br />
@@ -106,8 +106,8 @@
 
 <br />
 
-## UserForLogin
-|UserForLogin||Required|Max|Min|
+## UserForLoginDto
+|UserForLoginDto||Required|Max|Min|
 |:---:|:---:|:---:|:---:|:---:|
 |string|EmailOrNickname|Yes|45|3|
 |string|Password|Yes|20|8|
