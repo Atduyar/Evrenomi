@@ -21,14 +21,15 @@
 |:---:|:---:|:---:|:---:|:---:|
 |**POST**|/admin/setOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
 |**POST**|/admin/deleteOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
-|**GET**|/admin/getUser|Admin|[UserDetailDto](#UserDetailDto)|?id=(int)|
+|**GET**|/admin/getUser|Admin|[UserDetailDto](#UserDetailDto)|?userId=(int)|
 |**GET**|/admin/getAllUser|Admin|List<[UserSummaryDto](#UserSummaryDto)>||
+|**GET**|/admin/getAllBlog||List<[BlogSummaryDto](#BlogSummaryDto)>||
 
 
 ## BLOGS
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
-|**GET**|/blogs/getall||List<[BlogSummaryDto](#BlogSummaryDto)>||
+|**GET**|/blogs/getBlog||[BlogDetailDto](#BlogDetailDto)|?blogId=(int)|
 |**GET**|/blogs/getbypage||List<[BlogSummaryDto](#BlogSummaryDto)>|[BlogPageFilter](#BlogPageFilter)|
 
 
