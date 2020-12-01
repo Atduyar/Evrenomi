@@ -1,4 +1,4 @@
-### Hi there, I'm Ahmet Tarık DUYAR [Atduyar](api.atduyar.com/api/admin/testgetcomment) 👋
+### Hi there, I'm Ahmet Tarık DUYAR [Atduyar](api.atduyar.com/api/test/getcomment) 👋
 
 ## Api Methods
 
