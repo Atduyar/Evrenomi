@@ -313,10 +313,10 @@
 <br />
 
 ## BlogPageFilter
-|BlogPageFilter||Required|Max|Min|
+|BlogPageFilter||Defualt|Required|Max|Min|
 |:---:|:---:|:---:|:---:|:---:|
-|int|PageSize = 10||||
-|int|PageNumber = 1|No|50||
+|int|PageSize||10|||
+|int|PageNumber|1|No|50||
 
 ```
 {
@@ -324,8 +324,44 @@
     "PageNumber": 1,
 }
 ```
+<br />
 
+## CommentForBlog
+|CommentForBlog||Defualt|Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|int|CommentId|||||
+|int|CommentResponse|0||50||
+|string|UserAvatarUrl|||||
+|string|UserNickname|||||
+|string|CommentDate|||||
+|string|Text|||||
 
+```
+{
+    "commentId": 1,
+    "commentResponse": 2,
+    "userAvatarUrl": "FDRE2.jpg",
+    "userNickname": "Atduyar",
+    "commentDate": "1 gün önce",
+    "text": "Gerecekten ilginç bir konu 🤔🤔"
+}
+```
+<br />
+
+## AddCommentForBlog
+|AddCommentForBlog||Defualt|Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|int|BlogId||||1|
+|int|ParentBlogCommentId|null|No|||
+|string|Text|||||
+
+```
+{
+    "blogId": 1
+    "ParentBlogCommentId": null
+    "text": "Gerecekten ilginç bir konu 🤔🤔",
+}
+```
 
 
 <br />
