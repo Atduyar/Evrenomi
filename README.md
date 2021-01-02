@@ -53,7 +53,8 @@
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/users/getMyProfil|Me|[UserDetailDto](#UserDetailDto)||
-|**GET**|/users/updateUser|Me|[UserDetailDto](#UserDetailDto)|[UserDetailDto](#UserDetailDto)|
+|**POST**|/users/updateUser|Me|[UserDetailDto](#UserDetailDto)|[UserDetailDto](#UserDetailDto)|
+|**POST**|/users/updateUserPp|Me|ABCD1.jpg|IFormFile|
 
 
 ## TEST
