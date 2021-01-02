@@ -4,6 +4,7 @@
 
 **[AUTH](#AUTH)**<br />
 **[ADMİN](#ADMİN)**<br />
+**[AUTHORS](#AUTHORS)**<br />
 **[BLOGS](#BLOGS)**<br />
 **[USER](#USER)**<br />
 **[TEST](#TEST)**<br />
@@ -27,6 +28,13 @@
 |**GET**|/admin/getAllBlog|Admin|List<[BlogSummaryDto](#BlogSummaryDto)>||
 |**GET**|/admin/getAllBlogByStatus|Admin|List<[Blog](#BlogS)>|?status=(int)|
 
+## AUTHORS
+| HTTP Methods|Url|Authorize|Response|Request|
+|:---:|:---:|:---:|:---:|:---:|
+|**GET**|/authors/getAllAuthor|Auth|List<Author>||
+|**GET**|/authors/getAuthor|Author|Author|?authorId=(int)|
+|**POST**|/authors/getAuthorAccount|Auth|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
+|**POST**|/authors/postBlog|Author|OK|[BlogDetailDto](#BlogDetailDto)|
 
 ## BLOGS
 | HTTP Methods|Url|Authorize|Response|Request|
