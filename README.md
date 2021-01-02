@@ -315,8 +315,8 @@
 ## BlogPageFilter
 |BlogPageFilter||Required|Max|Min|
 |:---:|:---:|:---:|:---:|:---:|
-|int|PageSize|10|||
-|int|PageNumber|1|50||
+|int|PageSize = 10||||
+|int|PageNumber = 1|No|50||
 
 ```
 {
