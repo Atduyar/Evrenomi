@@ -26,21 +26,27 @@
 |**GET**|/admin/getUser|Admin|[UserDetailDto](#UserDetailDto)|?userId=(int)|
 |**GET**|/admin/getAllUser|Admin|List<[UserSummaryDto](#UserSummaryDto)>||
 |**GET**|/admin/getAllBlog|Admin|List<[BlogSummaryDto](#BlogSummaryDto)>||
-|**GET**|/admin/getAllBlogByStatus|Admin|List<[Blog](#BlogS)>|?status=(int)|
+|**GET**|/admin/getAllBlogByStatus|Admin|List<[Blog](#Blog)>|?status=(int)|
 
 ## AUTHORS
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
 |**GET**|/authors/getAllAuthor|Auth|List<Author>||
 |**GET**|/authors/getAuthor|Author|Author|?authorId=(int)|
-|**POST**|/authors/getAuthorAccount|Auth|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
+|**GET**|/authors/getAuthor|Author|Author|?authorId=(int)|
+|**POST**|/authors/getAuthorAccount|Auth|OK|[AuthorForRegister](#AuthorForRegister)|
 |**POST**|/authors/postBlog|Author|OK|[BlogDetailDto](#BlogDetailDto)|
 
 ## BLOGS
 | HTTP Methods|Url|Authorize|Response|Request|
 |:---:|:---:|:---:|:---:|:---:|
-|**GET**|/blogs/getBlog||[BlogDetailDto](#BlogDetailDto)|?blogId=(int)|
-|**GET**|/blogs/getbypage||List<[BlogSummaryDto](#BlogSummaryDto)>|[BlogPageFilter](#BlogPageFilter)|
+|**GET**|/blogs/getBlog||HtmlPage|?id=(int)|
+|**GET**|/blogs/getBlogComment||List<[CommentForBlog](#CommentForBlog)>|?blogId=(int)|
+|**GET**|/blogs/getBlogCommentResponse||List<[CommentForBlog](#CommentForBlog)>|?blogCommentId=(int)|
+|**POST**|/blogs/getbypage|Auth|List<[BlogSummaryDto](#BlogSummaryDto)>|[BlogPageFilter](#BlogPageFilter)|
+|**POST**|/blogs/addBlogComment|Auth|OK|[AddCommentForBlog](#AddCommentForBlog)|
+|**POST**|/blogs/updateBlogComment|Auth|OK|[CommentForBlog](#CommentForBlog)|
+|**POST**|/blogs/deleteBlogComment|Auth|OK|[CommentForBlog](#CommentForBlog)|
 
 
 ## USER
@@ -283,6 +289,25 @@
     "Id": 1,
     "Nickname": "Azathoth",
     "AvatarUrl": "url"
+}
+```
+
+<br />
+
+## AuthorForRegister
+|AuthorForRegister||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|int|UserId||||
+|string|AuthorName||||
+|string|AuthorAvatarUrl||||
+|string|AuthorDescription||||
+
+```
+{
+    "UserId": 1,
+    "AuthorName": "Azathoth",
+    "AuthorAvatarUrl": "url",
+    "AuthorDescription": "VOID"
 }
 ```
 
