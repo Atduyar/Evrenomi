@@ -314,7 +314,7 @@
 
 ## BlogPageFilter
 |BlogPageFilter||Defualt|Required|Max|Min|
-|:---:|:---:|:---:|:---:|:---:|
+|:---:|:---:|:---:|:---:|:---:|:---:|
 |int|PageSize||10|||
 |int|PageNumber|1|No|50||
 
@@ -328,7 +328,7 @@
 
 ## CommentForBlog
 |CommentForBlog||Defualt|Required|Max|Min|
-|:---:|:---:|:---:|:---:|:---:|
+|:---:|:---:|:---:|:---:|:---:|:---:|
 |int|CommentId|||||
 |int|CommentResponse|0||50||
 |string|UserAvatarUrl|||||
@@ -350,7 +350,7 @@
 
 ## AddCommentForBlog
 |AddCommentForBlog||Defualt|Required|Max|Min|
-|:---:|:---:|:---:|:---:|:---:|
+|:---:|:---:|:---:|:---:|:---:|:---:|
 |int|BlogId||||1|
 |int|ParentBlogCommentId|null|No|||
 |string|Text|||||
