@@ -310,6 +310,20 @@
     "AuthorDescription": "VOID"
 }
 ```
+<br />
+
+## BlogPageFilter
+|BlogPageFilter||Required|Max|Min|
+|:---:|:---:|:---:|:---:|:---:|
+|int|PageSize|10|||
+|int|PageNumber|1|50||
+
+```
+{
+    "PageSize": 50,
+    "PageNumber": 1,
+}
+```
 
 
 
