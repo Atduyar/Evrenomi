@@ -248,7 +248,9 @@
     "blogTitle": "Baskık",
     "blogTitlePhotoUrl": "url",
     "blogTags": "bilim",
-    "blogDate": "2020-01-11T00:00:00"
+    "blogDate": "2020-01-11T00:00:00",
+    "views": 3,
+    "readed": true
 }
 ```
 <br />
