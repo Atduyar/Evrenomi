@@ -24,6 +24,7 @@
 |**POST**|/admin/deleteOperationClaimToUser|Admin|OK|[OperationClaimToUserDto](#OperationClaimToUserDto)|
 |**POST**|/admin/addAuthor|Admin||[AuthorForRegister](#AuthorForRegister)|
 |**GET**|/admin/getUser|Admin|[UserDetailDto](#UserDetailDto)|?userId=(int)|
+|**GET**|/admin/getBlog|Admin|[BlogDetailDto](#BlogDetailDto)|?blogId=(int)|
 |**GET**|/admin/getAllUser|Admin|List<[UserSummaryDto](#UserSummaryDto)>||
 |**GET**|/admin/getAllBlog|Admin|List<[BlogSummaryDto](#BlogSummaryDto)>||
 |**GET**|/admin/getAllBlogByStatus|Admin|List<[Blog](#Blog)>|?status=(int)|
