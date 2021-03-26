@@ -88,6 +88,7 @@
 **[ErrorResponseDto](#ErrorResponseDto)**<br />
 **[OperationClaim](#OperationClaim)**<br />
 **[OperationClaimToUserDto](#OperationClaimToUserDto)**<br />
+**[BlogDetailDto](#BlogDetailDto)**<br />
 **[BlogSummaryDto](#BlogSummaryDto)**<br />
 **[UserDetailDto](#UserDetailDto)**<br />
 **[UserSummaryDto](#UserSummaryDto)**<br />
