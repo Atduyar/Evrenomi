@@ -336,6 +336,7 @@
 |:---:|:---:|:---:|:---:|:---:|:---:|
 |int|CommentId|||||
 |int|CommentResponse|0||50||
+|string|UserId|||||
 |string|UserAvatarUrl|||||
 |string|UserNickname|||||
 |string|CommentDate|||||
@@ -345,6 +346,7 @@
 {
     "commentId": 1,
     "commentResponse": 2,
+    "userId": 1,
     "userAvatarUrl": "FDRE2.jpg",
     "userNickname": "Atduyar",
     "commentDate": "1 gün önce",
