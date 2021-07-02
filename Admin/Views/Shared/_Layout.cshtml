@@ -1,0 +1,485 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin - @ViewData["Title"]</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Admin">
+                <div class="sidebar-brand-icon">
+                    <div style="width: 50px;">
+                        @RenderSection("SidebarSvg", required: false)
+                        @if (!IsSectionDefined("SidebarSvg"))
+                        {
+                            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' id='vector'> <path id='path' d='M 498.889 67.265 L 464.548 67.265 C 435.167 67.265 411.263 89.163 411.263 116.079 L 411.262 216.582 C 411.262 219.933 408.545 222.65 405.194 222.65 L 355.302 222.65 C 345.735 215.869 334.657 211.078 322.672 208.883 L 322.672 322.416 L 390.042 322.416 L 390.042 301.595 L 430.355 301.595 C 455.466 301.595 474.878 289.461 485.016 267.427 C 492.134 251.957 492.34 236.995 492.34 235.34 C 492.34 234.846 492.311 234.359 492.256 233.88 L 492.259 97.524 C 492.259 95.216 495.155 92.645 499.312 92.645 C 506.399 92.645 512.13 86.834 512 79.717 C 511.87 72.731 505.876 67.265 498.889 67.265 Z' fill='#fff' /> <path id='path_1' d='M 121.959 322.416 L 189.329 322.416 L 189.329 208.883 C 177.344 211.079 166.265 215.869 156.699 222.65 L 106.806 222.65 C 103.455 222.65 100.738 219.933 100.738 216.582 L 100.736 116.079 C 100.736 89.163 76.832 67.265 47.451 67.265 L 13.111 67.265 C 6.124 67.265 0.13 72.731 0.002 79.717 C -0.128 86.834 5.602 92.645 12.69 92.645 C 16.846 92.645 19.743 95.216 19.743 97.524 L 19.746 233.88 C 19.691 234.359 19.662 234.846 19.662 235.34 C 19.662 236.995 19.868 251.957 26.986 267.427 C 37.124 289.461 56.536 301.595 81.647 301.595 L 121.96 301.595 L 121.96 322.416 Z' fill='#fff' /> <path id='path_2' d='M 189.329 352.416 L 110.924 352.416 C 102.64 352.416 95.924 359.132 95.924 367.416 L 95.924 397.757 C 95.924 406.041 102.64 412.757 110.924 412.757 L 189.513 412.757 C 189.404 411.205 189.329 409.643 189.329 408.064 Z' fill='#fff' /> <path id='path_3' d='M 401.076 352.416 L 322.671 352.416 L 322.671 408.064 C 322.671 409.643 322.596 411.205 322.487 412.757 L 401.076 412.757 C 409.361 412.757 416.076 406.041 416.076 397.757 L 416.076 367.416 C 416.076 359.132 409.36 352.416 401.076 352.416 Z' fill='#fff' /> <path id='path_4' d='M 277.671 187.68 L 234.33 187.68 C 226.046 187.68 219.33 194.396 219.33 202.68 L 219.33 408.065 C 219.33 428.318 235.748 444.736 256.001 444.736 C 276.254 444.736 292.672 428.318 292.672 408.065 L 292.672 202.68 C 292.671 194.395 285.955 187.68 277.671 187.68 Z' fill='#fff' /></svg>
+                        }
+                        <!--<svg viewBox="-103 -41 500 500">-->
+                        <!-- 0 0 292.22 417.84 -->
+                        <!--<defs>
+                                <style>
+                                    .fcls-1 {
+                                        stroke: #fff;
+                                        stroke-miterlimit: 10;
+                                    }
+
+                                    .cls-2 {
+                                        fill: #fff;
+                                    }
+                                </style>
+                            </defs>
+                            <g id="katman_3" data-name="katman 3"><path class="cls-2 fcls-1" d="M164.5,60.5s5.94-12.15,22-17.07c23-7.93,55.86-11.75,55.86-11.75s-16.8,2-24.42,3.25c-36.35,6-60.45,15.26-65.41,18.57a21.52,21.52,0,0,0-8,10Z" transform="translate(-56.5 -25.48)" /></g>
+                            <g id="katman_2" data-name="katman 2"><path class="cls-1 cls-2" d="M188.5,243.5l21-4s8-9,15-31c0,0,7-21,16-59A433.73,433.73,0,0,0,253,206.57c.46-.07,6.46,26.93,17.46,52.93l11,25s16,37,19,78c0,0,5,34-4,65a32.69,32.69,0,0,1-10,15l22-4a35.17,35.17,0,0,0,10-20s4-17,4-42c0,0,0-32-14-77,0,0-5-17-18-45,0,0-10-23-21-66,0,0-12-44-13-89,0,0-2-23-2-38l-19,3s-1,38-18,97c0,0-7,29-14,51C203.5,212.5,194.5,238.5,188.5,243.5Z" transform="translate(-56.5 -25.48)" /><path class="cls-2" d="M57.83,398.74c4.9-5.55,30-33.12,101-98.87,80.1-74.17,111.73-111.68,112-112s41.2-47.53,53.1-87.18c11.95-39.82-5-57.32-5.13-57.49A31,31,0,0,0,316,40.29a44,44,0,0,0-29.61-11.4h-1.13c-6,0-16.42.19-29.82,1.19C275.7,27.35,292,26,304.2,26s16.64,1.45,17.93,2.08l2.31,1.09C328.79,31.2,343.3,39.43,347,59.59c4.35,23.71-3.29,43.29-20.95,75.67-17.76,32.56-52.56,67.54-52.91,67.89-.49.52-47.43,51.37-85,84C151.27,319.17,80.5,391.71,77.25,395Z" transform="translate(-56.5 -25.48)" /><path class="cls-2 fcls-1" d="M304.2,26.48c12.19,0,16.45,1.42,17.72,2l2.3,1.09c4.31,2,18.64,10.15,22.3,30.08,4.32,23.56-3.29,43.07-20.9,75.34-17.72,32.49-52.48,67.42-52.86,67.8s-47.39,51.34-84.92,83.92C151.28,318.5,81.47,390,77,394.58L59.18,398c6.76-7.53,32.84-35.55,100-97.74C239.3,226.05,271,188.51,271.25,188.16s41.28-47.63,53.21-87.37c6.27-20.9,4.55-35.5,2-44.07-2.7-9.07-6.78-13.44-7.22-13.89a33.93,33.93,0,0,0-2.87-2.91,44.55,44.55,0,0,0-29.95-11.53h-1.14c-3.47,0-8.4.06-14.53.31a313.07,313.07,0,0,1,33.45-2.22m0-1c-12.72,0-33.83,1.54-68.7,7a434.18,434.18,0,0,1,49.78-3.11h1.14a43.54,43.54,0,0,1,29.27,11.27,33.08,33.08,0,0,1,2.81,2.84s17,17,5,57-53,87-53,87-31,37-112,112-102,100-102,100l21-4s73-75,111-108,85-84,85-84,35-35,53-68,25.35-52.31,21-76c-3.71-20.21-18-28.51-22.85-30.8l-2.3-1.09c-1.47-.71-5.94-2.13-18.15-2.13Z" transform="translate(-56.5 -25.48)" /></g>
+                        </svg>-->
+                    </div>
+                </div>
+                <div class="sidebar-brand-text mx-3">
+                    @RenderSection("SidebarTitle", required: false)
+                    @if (!IsSectionDefined("SidebarTitle"))
+                    {
+                        <div>Viking</div>
+                    }
+                </div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                   aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Components</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Bloglar</h6>
+                        <a class="collapse-item" href="/admin/blogsw">Bloglar</a>
+                        <a class="collapse-item" href="/admin/blogswc">Onaylanacak Bloglar</a>
+                        <h6 class="collapse-header">Kullanıcılar</h6>
+                        <a class="collapse-item" href="/admin/usersw">Üyeler</a>
+                        <a class="collapse-item" href="/admin/blogCreater">Yazarlar</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                   aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Utilities</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                     data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <a class="collapse-item" href="utilities-border.html">Borders</a>
+                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Addons
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                   aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Pages</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login">Login</a>
+                        <a class="collapse-item" href="register">Register</a>
+                        <a class="collapse-item" href="forgot-password">Forgot Password</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="404.html">404 Page</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tables</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Sidebar Message -->
+            <div class="sidebar-card">
+                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="">
+                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                   aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                 aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                               placeholder="Search for..." aria-label="Search"
+                                               aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">3+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 12, 2019</div>
+                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 7, 2019</div>
+                                        $290.29 has been deposited into your account!
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 2, 2019</div>
+                                        Spending Alert: We've noticed unusually high spending for your account.
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter">7</span>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Message Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                             alt="">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">
+                                            Hi there! I am wondering if you can help me with a
+                                            problem I've been having.
+                                        </div>
+                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                             alt="">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">
+                                            I have the photos that you ordered last month, how
+                                            would you like them sent to you?
+                                        </div>
+                                        <div class="small text-gray-500">Jae Chun · 1d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                             alt="">
+                                        <div class="status-indicator bg-warning"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">
+                                            Last month's report looks great, I am very happy with
+                                            the progress so far, keep up the good work!
+                                        </div>
+                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                             alt="">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">
+                                            Am I a good boy? The reason I ask is because someone
+                                            told me that people say this to all dogs, even if they aren't good...
+                                        </div>
+                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <img class="img-profile rounded-circle"
+                                     src="img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">@ViewData["Header"]</h1>
+
+                    @RenderBody()
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="~/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/js/demo/chart-area-demo.js"></script>
+    <script src="~/js/demo/chart-pie-demo.js"></script>
+
+    <!-- alertfy js-->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
+    <!-- end alertfy js-->
+
+@RenderSection("Scripts", required: false)
+
+</body>
+
+</html>

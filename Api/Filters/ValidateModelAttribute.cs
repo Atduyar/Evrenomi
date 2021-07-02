@@ -28,8 +28,11 @@ namespace Api.Filters
     {
         //public string Error { get; set; }
 
-        public string Operation { get; set; }
-        public string ErrorMessages { get; set; }
+        //public string Operation { get; set; }
+        //public string ErrorMessages { get; set; }
+
+        public bool Success { get; set; } = false;
+        public string Message { get; set; }
 
         public ApiBadRequestResponse(ModelStateDictionary modelState)
         {
@@ -41,10 +44,12 @@ namespace Api.Filters
                 var modelStateVal = modelState[modelStateKey];
                 foreach (var error in modelStateVal.Errors)
                 {
-                    var key = modelStateKey;
-                    var errorMessage = error.ErrorMessage;
-                    Operation = key;
-                    ErrorMessages = errorMessage;
+                    //var key = modelStateKey;
+                    //var errorMessage = error.ErrorMessage;
+                    //Operation = key;
+                    //ErrorMessages = errorMessage;
+
+                    Message = error.ErrorMessage;
                 }
             }
         }

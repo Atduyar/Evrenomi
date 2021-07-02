@@ -29,7 +29,7 @@ namespace Business.Concrete
                 Nickname = userForRegisterDto.Nickname,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Status = true
+                Status = 0
             };
             _userService.Add(user);
 
@@ -38,7 +38,7 @@ namespace Business.Concrete
 
         public IDataResult<User> Login(UserForLoginDto userForEmailDto)
         {
-            var userToCheck = _userService.GetByEmailOrNickname(userForEmailDto.EmailOrNickname);// user i alır
+            var userToCheck = _userService.GetByEmailOrNickname(userForEmailDto.EmailOrNickname).Data;// user i alır
             if (userToCheck == null)//email ve nickname yok sa
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
@@ -54,16 +54,16 @@ namespace Business.Concrete
 
         public IResult UserExists(string emailOrNickname)
         {
-            if (_userService.GetByEmailOrNickname(emailOrNickname) == null)
+            if (_userService.GetByEmailOrNickname(emailOrNickname).Data == null)
             {
-                return new ErrorResult(Messages.UserAlreadyExists);
+                return new ErrorResult();
             }
-            return new SuccessResult();
+            return new SuccessResult(Messages.UserAlreadyExists);
         }
 
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            var claims = _userService.GerClaims(user);
+            var claims = _userService.GerClaims(user).Data;
             var accessToken = _tokenHelper.CreateToken(user, claims);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }

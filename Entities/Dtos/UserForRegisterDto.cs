@@ -8,11 +8,11 @@ namespace Entities.Dtos
         [Required]
         [DataType(DataType.EmailAddress)]
         [MaxLength(45)]
-        [MinLength(10)]
+        [MinLength(8)]
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
-        [MaxLength(20)]
+        [MaxLength(45)]
         [MinLength(8)]
         public string Password { get; set; }
         [Required]

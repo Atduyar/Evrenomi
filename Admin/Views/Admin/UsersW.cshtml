@@ -1,0 +1,480 @@
+﻿@using System.Collections
+@using System.Text.Json
+@model Admin.Models.Results.UsersWModel
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "_Layout";
+}
+
+@section Scripts{
+    <style>
+        .userFormInputs {
+            color: black !important;
+        }
+
+            .userFormInputs:focus {
+                color: darkblue !important;
+            }
+
+        .imgA {
+            position: relative;
+            max-width: 100%;
+            margin-top: -16px;
+            border-radius: .35rem .35rem 0 0;
+            min-width: 100%;
+            width: auto;
+            justify-content: center;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .imgPAT {
+            height: 40px;
+            border-radius: 20px;
+            margin-left: 10px;
+        }
+
+        .blogP {
+            margin-top: .20rem;
+            margin-left: .25rem;
+            margin-bottom: 0;
+        }
+
+        .blogC {
+            padding-bottom: 0 !important;
+        }
+
+        #ViewBlogIframe {
+            zoom: 3;
+            transform: scale(0.33);
+            transform-origin: 0 0;
+        }
+
+        #BlogsColumsAT {
+            column-count: 1;
+        }
+
+        .card-link-1-AT {
+            margin-left: 1.25rem;
+        }
+
+        .dot {
+            float: right;
+            height: 20px;
+            width: 20px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 10px 2px;
+        }
+
+        .statuC {
+            color: red;
+            background-color: white;
+        }
+
+        .baned {
+            background-color: red;
+        }
+
+
+        mark {
+            background-color: white;
+            padding: 0px;
+            margin-left: -3px;
+        }
+    </style>
+}
+
+<div class="row">
+
+    <div class="col-lg-6">
+
+        <!-- Circle Buttons -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary" style="display: inline-block">Bloglar</h6>
+                <a class="card-link float-right card-link-1-AT" style="font-weight: bold;" onclick="blogsSizeSelect(1, this)">1</a>
+                <a class="card-link float-right" style="font-weight: bold;" onclick="blogsSizeSelect(2, this)">2</a>
+            </div>
+            <div class="card-body" style="height: 585px; overflow-y:scroll; ">
+                <!-- Blogs -->
+
+                <div class="card-columns" id="BlogsColumsAT">
+                    @for (var i = 0; i < Model.Users.Count; i++)
+                    {
+                        <div class="card mb-4 py-3 border-left-primary" style="padding: 0px;" onclick="GetUser(@Model.Users[i].Id)" id="userCardId-@Model.Users[i].Id">
+                            <div class="card-body" style="padding: 0px;">
+                                <img src="http://api.atduyar.com/Images/@(Model.Users[i].AvatarUrl != null ? Model.Users[i].AvatarUrl : "defaultPp.png")" class="imgPAT" />
+                                @Model.Users[i].Nickname
+                                @{ BitArray bits = new BitArray(new int[] { Model.Users[i].Status }); }
+                                <span class="dot @(bits[0] == true ? "baned" : "")"></span>
+                                <span class="dot @(bits[1] == true ? "baned" : "")"></span>
+                                <span class="dot @(bits[2] == true ? "baned" : "")"></span>
+                                <span class="dot @(bits[6] || bits[7] || bits[8] || bits[9]  == true ? "baned" : "")"></span>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Görünüm</h6>
+            </div>
+            <div class="card-body" style="height: 590px;">
+                <div class="row">
+                    <div class="col-4">
+                        <label id="lblStatusAT">
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                        </label><br>
+                        <br />
+                        <div id="chBoxe">
+                            <input onclick="statusInput(this, 9)" type="checkbox" id="Onay" name="Onay">
+                            <label for="Onay">Onay</label><br>
+                            <input onclick="statusInput(this, 8)" type="checkbox" id="Ban" name="Ban">
+                            <label for="Ban">Ban</label><br>
+                            <input onclick="statusInput(this, 7)" type="checkbox" id="Gizli" name="Gizli">
+                            <label for="Gizli">Gizli Hesap</label><br>
+                            <br />
+
+
+                            <input onclick="statusInput(this, 6)" type="checkbox" id="Bayrak1" name="Bayrak1">
+                            <input onclick="statusInput(this, 5)" type="checkbox" id="Bayrak2" name="Bayrak2">
+                            <input onclick="statusInput(this, 4)" type="checkbox" id="Bayrak3" name="Bayrak3">
+                            <label for="Bayrak3">Bayrak</label><br>
+                            <br>
+
+                            <input onclick="statusInput(this, 3)" type="checkbox" id="EBan1" name="EBan1">
+                            <label for="EBan1">Pp Ban</label><br>
+                            <input onclick="statusInput(this, 2)" type="checkbox" id="EBan2" name="EBan2">
+                            <label for="EBan2">Update Ban</label><br>
+                            <input onclick="statusInput(this, 1)" type="checkbox" id="EBan3" name="EBan3">
+                            <label for="EBan3">Messaja Ban</label><br>
+                            <input onclick="statusInput(this, 0)" type="checkbox" id="EBan4" name="EBan4">
+                            <label for="EBan4">Author Ban</label><br>
+                        </div>
+
+                        <div class="my-2"></div>
+                        <a class="btn btn-success btn-icon-split" onclick="SetStatus()">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text">Uygula</span>
+                        </a>
+                        <div class="my-2"></div>
+                        <a class="btn btn-danger btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                            <span class="text">İptal Et</span>
+                        </a>
+
+                    </div>
+                    <div class="col-8">
+                        <div class="col-lg-12" style="height: 100%;">
+                            <img src="http://api.atduyar.com/Images/defaultPp.png" class="imgPAT" style="margin-left: 40%; height: 100px;" id="UserPp"><h2 id="userFormId" style="display: inline;color: black;">0</h2>
+                            <input type="text" class="form-control bg-light border-0 small userFormInputs" id="NickName" placeholder="NickName" style="margin-top: 5px;">
+                            <input type="text" class="form-control bg-light border-0 small userFormInputs" id="FirstName" placeholder="FirstName" style="margin-top: 5px;display: inline-block;width: 45%;">
+                            <input type="text" class="form-control bg-light border-0 small userFormInputs" id="LastName" placeholder="LastName" style="margin-top: 5px;display: inline-block;width: 45%;">
+                            <input type="text" class="form-control bg-light border-0 small userFormInputs" id="Email" placeholder="Email" style="margin-top: 20px;">
+                            <input type="text" class="form-control bg-light border-0 small userFormInputs" id="Description" placeholder="Description" style="margin-top: 5px;">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    //function handler() {
+    //    var url = "";
+    //    var xhr = new XMLHttpRequest();
+
+    //    xhr.open('GET', url);
+    //    xhr.onreadystatechange = handler;
+    //    xhr.responseType = 'blob';
+    //    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+    //    xhr.send();
+
+    //    if (this.readyState === this.DONE) {
+    //        if (this.status === 200) {
+    //            // this.response is a Blob, because we set responseType above
+    //            var data_url = URL.createObjectURL(this.response);
+    //            document.getElementById("ViewBlogIframe").src = data_url;
+    //        } else {
+    //            console.error('no pdf :(');
+    //        }
+    //    }
+    //}
+
+    var Users = @Html.Raw(JsonSerializer.Serialize(Model.Users));
+
+
+
+    //function GetUser(id) {
+    //    //var us = Users.find(u => u.Id == id);
+
+    //    SetHtmlStatus(us.Status);
+
+    //    var ls = document.getElementById("lblStatusAT").children;
+    //    for (var i = 0; i < ls.length; i++) {
+    //        ls[i].classList = "";
+    //    }
+    //}
+    function GetUser(id) {
+        httpR("/admin/getUser", "?userId=" + id, "GET", false, true, null, GetUserR);////////////////////////////////////////////////////////////
+
+    }
+
+    function GetUserR() {
+        if (this.readyState === this.DONE) {
+            if (this.status === 200) {
+
+                var json = JSON.parse(this.responseText.toString());
+                console.log(json);
+
+
+                SetHtmlStatus(json.status);
+                document.getElementById("userFormId").innerHTML = json.id;
+                document.getElementById("NickName").value = json.nickname;
+                document.getElementById("FirstName").value = json.firstName;
+                document.getElementById("LastName").value = json.lastName;
+                document.getElementById("Email").value = json.email;
+                document.getElementById("Description").value = json.description;
+                document.getElementById("UserPp").src = "http://api.atduyar.com/Images/" + (json.avatarUrl != null ? json.avatarUrl : "defaultPp.png");
+
+                var ls = document.getElementById("lblStatusAT").children;
+                for (var i = 0; i < ls.length; i++) {
+                    ls[i].classList = "";
+                }
+
+
+            } else {
+                console.error('no pdf :(');
+            }
+        }
+    }
+
+    function SetHtmlStatus(status) {
+        var ls = document.getElementById("lblStatusAT");
+        var st = status.toString(2);
+
+        var lsl = ls.children.length;
+        for (var i = 0; i < st.length; i++) {
+            ls.children[lsl-(i+1)].innerHTML = st[st.length - (i+1)];
+        }
+        for (var i = 0; i < lsl - st.length; i++) {
+            ls.children[i].innerHTML = 0;
+        }
+
+        var st = document.getElementById("chBoxe").getElementsByTagName("input");
+        for (var i = lsl-1; i >= 0; i--) {
+            if (ls.children[i].innerHTML == "1")
+                st[lsl - (i + 1)].checked = true;
+            else
+                st[lsl - (i + 1)].checked = false;
+        }
+    }
+
+    function SetStatus() {
+        var ls = document.getElementById("lblStatusAT");
+        var st = "";
+        var sti = 0;
+
+        for (var i = 0; i < ls.children.length; i++) {
+            st += ls.children[i].innerHTML;
+        }
+        sti = parseInt(st, 2);
+        //alert(st);
+        //alert(sti);
+        //var postBodyS = '{"Id": ' + document.getElementById("userFormId").innerHTML + ', "Nickname": "' + document.getElementById('NickName').value + '", "FirstName": "' + document.getElementById('FirstName').value + '", "LastName": "' + document.getElementById('LastName').value + '", "Email": "' + document.getElementById('Email').value + '", "AvatarUrl": "null","Description": "' + document.getElementById('Description').value + '"}';
+        var postBodyS = {"Id": parseInt(document.getElementById("userFormId").innerHTML), "Nickname": document.getElementById('NickName').value , "FirstName": document.getElementById('FirstName').value , "LastName": document.getElementById('LastName').value , "Email":  document.getElementById('Email').value , "AvatarUrl": "null","Description": document.getElementById('Description').value};
+
+
+
+        //document.getElementById("userFormId").innerHTML = json.id;
+        //document.getElementById("NickName").value = json.nickname;
+        //document.getElementById("FirstName").value = json.firstName;
+        //document.getElementById("LastName").value = json.lastName;
+        //document.getElementById("Email").value = json.email;
+        //document.getElementById("Description").value = json.description;
+
+        //httpR("/admin/getBlogViewById", "?blogId=" + blogId, "GET", false, true, null, viewBlogHandler);////////////////////////////////////////////////////////////
+        if (postBodyS.Id != 1) {
+            if (postBodyS.Id == -666) {postBodyS.Id = 1}
+            httpR("/admin/setUserProfile", "", "POST", true, true, JSON.stringify(postBodyS), userUpdateR);
+            httpR("/admin/setUserStatus", "?id=" + document.getElementById("userFormId").innerHTML + "&status=" + sti, "GET", false, true, "", userStatusUpdateR);
+        }
+        else {
+            var rnd = Math.floor(Math.random() * 9);
+            switch (rnd) {
+                case 0://fack qr code
+                        window.open("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7f2a46c8-4772-44a2-9c74-a37d7ba147fe/ddypmz6-d7f88138-3085-4dfc-97e8-9cb6b2d3b13f.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvN2YyYTQ2YzgtNDc3Mi00NGEyLTljNzQtYTM3ZDdiYTE0N2ZlXC9kZHlwbXo2LWQ3Zjg4MTM4LTMwODUtNGRmYy05N2U4LTljYjZiMmQzYjEzZi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.PXWk485hEzyAYvZANmvtnj0MGkl4wzOV6gNY_ZXAW1I", '_blank').focus();
+                    break;
+                case 1://otomatik araatıcı + süpeli link yaratıcı(http://www.shadyurl.com/) ile yapılan atduyar.com linki
+                        window.open("https://googlethatforyou.com?q=open%20this%20%3D%3E%20http%3A%2F%2Fwww.5z8.info%2F-php-deactivate_phishing_filter-48-_a2g1jm_begin-bank-account-xfer", '_blank').focus();
+                    break;
+                case 2://NYAN CAT GO BRRRRRR
+                        window.open("http://www.nyan.cat/", '_blank').focus();
+                    break;
+                case 3://HACKEDDD
+                    window.open("https://hackertyper.net/#", '_blank').focus();
+                    break;
+                case 4://Naver giv up
+                        window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO", '_blank').focus();
+                    break;
+                case 5://NEVER GIVE UP YOUR WAAAAAAAAAAAAY
+                        window.open("https://www.youtube.com/watch?v=tYzMYcUty6s&ab_channel=TeamPsycosmos", '_blank').focus();
+                    break;
+                case 6://REAL NYAN CAT GO BRRRRRR
+                    window.open("https://www.youtube.com/watch?v=QH2-TGUlwu4&ab_channel=NyanCat", '_blank').focus();
+                    break;
+                case 7://giftnator
+                        window.open("https://atduyar.com/giftnator/?GiftName=ElifD", '_blank').focus();
+                    break;
+                case 8://REALITY...
+                    window.open("https://www.youtube.com/watch?v=uwmeH6Rnj2E&ab_channel=Doriitostv", '_blank').focus();
+                    break;
+            }
+        }
+    }
+    function CancelStatus() {
+
+    }
+
+    var SelectBlog;
+    var SelectBlogSize = 0;
+    function blogsSizeSelect(size, event)
+    {
+        if (size == SelectBlogSize) {
+            SelectBlogSize = 0;
+            event.style = "";
+            SelectBlog = null;
+            document.getElementById("BlogsColumsAT").style = "";
+        } else {
+            if (SelectBlog != null) {
+                SelectBlog.style = "";
+            }
+            event.style = "color: #C517F5;";
+            document.getElementById("BlogsColumsAT").style = "column-count: "+size+";";
+            SelectBlogSize = size;
+            SelectBlog = event;
+        }
+    }
+
+    function httpR(url, urle, metod, blob, authB, body, handler) {
+        var baseUrl = "https://api.atduyar.com/api";
+        var xhr = new XMLHttpRequest();
+        xhr.open(metod, baseUrl + url + urle);
+        xhr.onreadystatechange = handler;
+        if (blob)
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        if (authB)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + "@Model.Token.ToString()");
+
+        xhr.send(body);
+    }
+
+    function userUpdateR() {
+        if (this.readyState === this.DONE) {
+            if (this.status === 200) {
+                //// this.response is a Blob, because we set responseType above
+                //var data_url = URL.createObjectURL(this.response);
+                //document.getElementById("ViewBlogIframe").src = data_url;
+                var json = JSON.parse(this.responseText.toString());
+                console.log(json);
+                alertify.success('Kullanıcı Güncelleme Başarılı');
+            } else {
+                console.error('no pdf :(');
+                alertify.error('Kullanıcı Güncelleme Başarısız');
+            }
+        }
+    }
+
+    function userStatusUpdateR() {
+        if (this.readyState === this.DONE) {
+            if (this.status === 200) {
+                var json = JSON.parse(this.responseText.toString());
+                console.log(json);
+                var id = document.getElementById("userFormId").innerHTML;
+                GetUser(id);
+
+
+                //////
+                var ls = document.getElementById("lblStatusAT");
+                var st = "";
+                var sti = 0;
+
+                for (var i = 0; i < ls.children.length; i++) {
+                    st += ls.children[i].innerHTML;
+                }
+                sti = parseInt(st, 2);
+                //////
+
+                var dots = document.getElementById(("userCardId-" + id)).getElementsByTagName("span");
+                dots[0].classList = st[st.length - 1] == "1" ? "dot baned" : "dot";
+                dots[1].classList = st[st.length - 2] == "1" ? "dot baned" : "dot";
+                dots[2].classList = st[st.length - 3] == "1" ? "dot baned" : "dot";
+                dots[3].classList = (st[st.length - 7] == "1" || st[st.length - 8] == "1" || st[st.length - 9] == "1" || st[st.length - 10] == "1" ) == true ? "dot baned" : "dot";
+
+                alertify.success('Statü Güncelleme Başarılı');
+            } else {
+                console.error('no pdf :(');
+                alertify.error('Statü Güncelleme Başarılı');
+            }
+        }
+    }
+
+    ////////////////
+    function updateIframeBody(text){
+        var myFrame = document.getElementById("ViewBlogIframe");
+        var myFramey = (myFrame.contentWindow || myFrame.contentDocument);
+        if (myFramey.document)myFramey = myFramey.document;
+        //var myFrame = document.getElementById("iframeAT").contents().find('body');
+        myFramey.body.innerHTML = text;
+    }
+
+    function statusInput(el, st) {
+        //if (el.checked) {
+        //    el.checked = false;
+        //} else {
+        //    el.checked = true;
+        //}
+        var ls = document.getElementById("lblStatusAT").children[st];
+        if (ls.classList[0] == "statuC") {
+            ls.classList = "";
+        } else {
+            ls.classList = "statuC";
+        }
+        if (ls.innerHTML == "1") {
+            ls.innerHTML = "0";
+        } else {
+            ls.innerHTML = "1";
+        }
+
+        //document.getElementById("lblStatusAT").children[st].classList = (el.checked == true) ? "baned" : "";
+    }
+</script>

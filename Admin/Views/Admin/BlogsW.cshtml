@@ -1,0 +1,236 @@
+﻿@model Admin.Models.BlogsWModel
+
+@{
+    ViewBag.Title = "Blogs";
+    Layout = "_Layout";
+}
+
+@section Scripts{
+    <style>
+        .imgA {
+            position: relative;
+            max-width: 100%;
+            margin-top: -16px;
+            border-radius: .35rem .35rem 0 0;
+            min-width: 100%;
+            width: auto;
+            justify-content: center;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .blogP {
+            margin-top: .20rem;
+            margin-left: .25rem;
+            margin-bottom: 0;
+        }
+
+        .blogC {
+            padding-bottom: 0 !important;
+        }
+
+        #ViewBlogIframe {
+            zoom: 3;
+            transform: scale(0.33);
+            transform-origin: 0 0;
+        }
+
+        .card-link-1-AT { margin-left: 1.25rem; }
+    </style>
+}
+
+<div class="row">
+
+    <div class="col-lg-6">
+
+        <!-- Circle Buttons -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary" style="display: inline-block">Bloglar</h6>
+                <a class="card-link float-right card-link-1-AT" style="font-weight: bold;" onclick="blogsSizeSelect(1, this)">1</a>
+                <a class="card-link float-right" style="font-weight: bold;" onclick="blogsSizeSelect(2, this)">2</a>
+                <a class="card-link float-right" style="font-weight: bold;" onclick="blogsSizeSelect(3, this)">3</a>
+            </div>
+            <div class="card-body" style="height: 585px; overflow-y:scroll; ">
+                <!-- Blogs -->
+
+                <div class="card-columns" id="BlogsColumsAT">
+                    @for (var i = 0; i < Model.PendingBlogs.Count; i++)
+                    {
+                        if (((0 ^ Model.PendingBlogs[i].BlogStatus) & 969) == 0)
+                        {
+                            <div class="card mb-4 py-3 border-bottom-secondary blogC" onclick="selectBlog(@Model.PendingBlogs[i].Id)">
+                                <div class="card-body" style="padding:0;">
+                                    <img src="@Model.PendingBlogs[i].BlogTitlePhotoUrl" class="img-responsive imgA">
+                                    <p class="blogP">@Model.PendingBlogs[i].BlogTitle</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Görünüm</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- View Button -->
+                    <div class="col-lg-4">
+                        <a href="#" class="btn btn-secondary btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-arrow-right"></i>
+                            </span>
+                            <span class="text">Düzenle</span>
+                        </a>
+                        <div class="my-2"></div>
+                        <a href="#" class="btn btn-success btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text">Kabul Et</span>
+                        </a>
+                        <div class="my-2"></div>
+                        <a href="#" class="btn btn-primary btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-flag"></i>
+                            </span>
+                            <span class="text">İsaretle</span>
+                        </a>
+                        <div class="my-2"></div>
+                        <a href="#" class="btn btn-warning btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </span>
+                            <span class="text">Hatalı</span>
+                        </a>
+                        <div class="my-2"></div>
+                        <a href="#" class="btn btn-danger btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                            <span class="text">Sil</span>
+                        </a>
+                        <div class="my-2"></div>
+                    </div>
+                    <!-- View Iframe -->
+                    <div class="col-lg-8" style="height: 550px;">
+                        <iframe src="" height="525" width="300" id="ViewBlogIframe"></iframe>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    //function handler() {
+    //    var url = "";
+    //    var xhr = new XMLHttpRequest();
+
+    //    xhr.open('GET', url);
+    //    xhr.onreadystatechange = handler;
+    //    xhr.responseType = 'blob';
+    //    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+    //    xhr.send();
+
+    //    if (this.readyState === this.DONE) {
+    //        if (this.status === 200) {
+    //            // this.response is a Blob, because we set responseType above
+    //            var data_url = URL.createObjectURL(this.response);
+    //            document.getElementById("ViewBlogIframe").src = data_url;
+    //        } else {
+    //            console.error('no pdf :(');
+    //        }
+    //    }
+    //}
+
+
+    function selectBlog(blogId) {
+        httpR("/admin/getBlogViewById", "?blogId=" + blogId, "GET", false, true, null, viewBlogHandler);
+
+        //httpR("/admin/getBlog", "?blogId=" + blogId, "GET", false, true ,null , selectBlogHandler);
+
+    }
+
+    var SelectBlog;
+    var SelectBlogSize = 0;
+    function blogsSizeSelect(size, event)
+    {
+        if (size == SelectBlogSize) {
+            SelectBlogSize = 0;
+            event.style = "";
+            SelectBlog = null;
+            document.getElementById("BlogsColumsAT").style = "";
+        } else {
+            if (SelectBlog != null) {
+                SelectBlog.style = "";
+            }
+            event.style = "color: #C517F5;";
+            document.getElementById("BlogsColumsAT").style = "column-count: "+size+";";
+            SelectBlogSize = size;
+            SelectBlog = event;
+        }
+    }
+
+    function httpR(url, urle, metod, blob, authB, body, handler) {
+        var baseUrl = "https://api.atduyar.com/api";
+        var xhr = new XMLHttpRequest();
+        xhr.open(metod, baseUrl + url + urle);
+        xhr.onreadystatechange = handler;
+        if (blob)
+            xhr.responseType = 'document';
+        if (authB)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + "@Model.Token.ToString()");
+        xhr.send(body);
+    }
+
+    function selectBlogHandler() {
+        if (this.readyState === this.DONE) {
+            if (this.status === 200) {
+                //// this.response is a Blob, because we set responseType above
+                //var data_url = URL.createObjectURL(this.response);
+                //document.getElementById("ViewBlogIframe").src = data_url;
+                var json = JSON.parse(this.responseText.toString());
+                console.log(json);
+                httpR("/admin/getBlogView", "", "POST", true, true, json, viewBlogHandler);
+            } else {
+                console.error('no pdf :(');
+            }
+        }
+    }
+
+    function viewBlogHandler() {
+        if (this.readyState === this.DONE) {
+            if (this.status === 200) {
+                //// this.response is a Blob, because we set responseType above
+                //var data_url = URL.createObjectURL(this.response);
+                //document.getElementById("ViewBlogIframe").src = data_url;
+                updateIframeBody(this.response);
+                console.log(this.responseText);
+            } else {
+                console.error('no pdf :(');
+            }
+        }
+    }
+
+    function updateIframeBody(text){
+        var myFrame = document.getElementById("ViewBlogIframe");
+        var myFramey = (myFrame.contentWindow || myFrame.contentDocument);
+        if (myFramey.document)myFramey = myFramey.document;
+        //var myFrame = document.getElementById("iframeAT").contents().find('body');
+        myFramey.body.innerHTML = text;
+    }
+</script>

@@ -1,0 +1,725 @@
+﻿@model Admin.Models.BlogsWModel
+
+@{
+    ViewBag.Title = "Onaylanacak Bloglar";
+    Layout = "_Layout";
+}
+
+@section Scripts{
+    <style>
+        .imgA {
+            position: relative;
+            max-width: 100%;
+            margin-top: -16px;
+            border-radius: .35rem .35rem 0 0;
+            min-width: 100%;
+            width: auto;
+            justify-content: center;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .imgPAT {
+            height: 40px;
+            border-radius: 20px;
+            margin-left: 10px;
+        }
+
+        .blogP {
+            margin-top: .20rem;
+            margin-left: .25rem;
+            margin-bottom: 0;
+        }
+
+        .blogC {
+            padding-bottom: 0 !important;
+        }
+
+        #ViewBlogIframe {
+            zoom: 2;
+            transform: scale(0.50);
+            transform-origin: 0 0;
+        }
+
+        .statuC {
+            color: red;
+            background-color: white;
+        }
+
+        mark {
+            background-color: white;
+            padding: 0px;
+            margin-left: -3px;
+        }
+        .upsideDown {
+            transform: rotate(180deg);
+        }
+        .upsideDown div {
+            transform: rotate(-180deg);
+        }
+    </style>
+}
+
+<div class="row" id="mainBlogDivATD">
+
+    <div class="col-lg-6">
+
+        <!-- Circle Buttons -->
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" href="#Bloglar" data-toggle="tab">Home</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" href="#Duzenlenmis" data-toggle="tab">Duzenlenmis</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+
+
+            <div class="tab-pane fade active show" id="Bloglar">
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary" style="display: inline-block">Bloglar</h6>
+                        <i class="fas fa-redo-alt card-link float-right" aria-hidden="true" style="margin-top: 4px; color: #4E73DF; margin-left: 5px;" onclick="upsideDown()"></i>
+                        <a class="card-link float-right card-link-1-AT" style="font-weight: bold; margin-left: 1.25rem;" onclick="blogsSizeSelect(1, this)">1</a>
+                        <a class="card-link float-right" style="font-weight: bold;" onclick="blogsSizeSelect(2, this)">2</a>
+                        <a class="card-link float-right" style="font-weight: bold;" onclick="blogsSizeSelect(3, this)">3</a>
+                    </div>
+                    <div class="card-body" style="height: 550px; overflow-y:scroll; ">
+                        <!-- Blogs -->
+
+                        <div class="card-columns" id="BlogsColumsAT">
+                            @if (Model.PendingBlogs != null)
+                            {
+                                @for (var i = 0; i < Model.PendingBlogs.Count; i++)
+                                {
+
+                                    <div class="card mb-4 py-3 border-bottom-primary blogC" onclick="selectBlog(@Model.PendingBlogs[i].Id)" status="@Model.PendingBlogs[i].BlogStatus" id="@Model.PendingBlogs[i].Id" style="@((((0 ^ Model.PendingBlogs[i].BlogStatus) & 969) == 0) ? "" : "display: none;")">
+                                        <div class="card-body" style="padding: 0;">
+                                            <img src="@Model.PendingBlogs[i].BlogTitlePhotoUrl" class="img-responsive imgA">
+                                            <p class="blogP">@Model.PendingBlogs[i].BlogTitle</p>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="Duzenlenmis">
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 card-link font-weight-bold text-primary" style="display: inline-block">Düzenlenmis</h6>
+                        <i class="fas fa-redo-alt card-link float-right" aria-hidden="true" style="margin-top: 4px; color: #4E73DF; margin-left: 5px;" onclick="upsideDown()"></i>
+                        <input type="checkbox" class="float-right" onchange="selectStatusBlogCB(this.checked)" title="Ters">
+                        <input id="statusInput" class="float-right" type="text" onchange="selectStatusBlog(this.value)" title="Status Ara" />
+                        <a class="float-right" onclick="selectStatusBlog(2);" title="Banlılar"><i class="fas fa-ban" style="font-size: 24px;color: red;margin: 0 3px;"></i></a>
+                        <a class="float-right" onclick="selectStatusBlog(128);" title="Düzenlemeye alınanlar"><i class="fas fa-edit" style="font-size: 24px; color: black;margin: 0 3px;"></i></a>
+                        <a class="float-right" onclick="selectStatusBlog(1);" title="Onaylanacaklar"><i class="fas fa-thumbs-up" style="font-size: 24px;color: #82C91E;margin: 0 3px;"></i></a>
+                        <a class="float-right" onclick="selectStatusBlog(64);" title="Taslaklar"><i class="fas fa-drafting-compass" style="font-size: 24px; color: #858796;margin: 0 3px;"></i></a>@*taslak*@
+                    </div>
+                    <div class="card-body" style="height: 550px; overflow-y:scroll; ">
+                        <!-- Blogs -->
+                        <div class="card-columns" id="StatusBlogsColumsAT">
+                            @if (Model.PendingBlogs != null)
+                            {
+                                @for (var i = 0; i < Model.PendingBlogs.Count; i++)
+                                {
+
+                                    <div class="card mb-4 py-3 border-bottom-primary blogC" onclick="selectBlog(@Model.PendingBlogs[i].Id)" status="@Model.PendingBlogs[i].BlogStatus" id="@Model.PendingBlogs[i].Id">
+                                        <div class="card-body" style="padding: 0;">
+                                            <img src="@Model.PendingBlogs[i].BlogTitlePhotoUrl" class="img-responsive imgA">
+                                            <p class="blogP">@Model.PendingBlogs[i].BlogTitle</p>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Brand Buttons -->
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Görünüm</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- View Button -->
+                    <div class="col-lg-4">
+                        <label id="lblStatusAT">
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                            <mark class="">2</mark>
+                        </label><br>
+                        <br />
+                        <div id="chBoxe">
+                            <input onclick="statusInput(this, 9)" type="checkbox" id="Onay" name="Onay">
+                            <label for="Onay">Onay</label><br>
+                            <input onclick="statusInput(this, 8)" type="checkbox" id="Ban" name="Ban">
+                            <label for="Ban">Ban</label><br>
+                            <input onclick="statusInput(this, 7)" type="checkbox" id="Gizli" name="Gizli">
+                            <label for="Gizli">Gizli Hesap</label><br>
+                            <br />
+
+
+                            <input onclick="statusInput(this, 6)" type="checkbox" id="Bayrak1" name="Bayrak1">
+                            <input onclick="statusInput(this, 5)" type="checkbox" id="Bayrak2" name="Bayrak2">
+                            <input onclick="statusInput(this, 4)" type="checkbox" id="Bayrak3" name="Bayrak3">
+                            <label for="Bayrak3">Bayrak</label><br>
+                            <br>
+
+                            <input onclick="statusInput(this, 3)" type="checkbox" id="EBan1" name="EBan1">
+                            <label for="EBan1">Taslak</label><br>
+                            <input onclick="statusInput(this, 2)" type="checkbox" id="EBan2" name="EBan2">
+                            <label for="EBan2">düzenlemeye alındı</label><br>
+                            <input onclick="statusInput(this, 1)" type="checkbox" id="EBan3" name="EBan3">
+                            <label for="EBan3">???</label><br>
+                            <input onclick="statusInput(this, 0)" type="checkbox" id="EBan4" name="EBan4">
+                            <label for="EBan4">???</label><br>
+                        </div>
+
+                        <div class="my-2"></div>
+                        <a class="btn btn-success btn-icon-split" onclick="SetStatus()">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text">Uygula</span>
+                        </a>
+                        <div class="my-2"></div>
+                        <a class="btn btn-danger btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                            <span class="text">İptal Et</span>
+                        </a>
+
+                    </div>
+
+
+
+                    <!-- View Iframe -->
+                    <div class="col-lg-8" style="height: 550px;">
+                        <img src="http://api.atduyar.com/Images/defaultPp.png" class="imgPAT" style="margin-left: 0%; height: 150px;" id="blogTitlePhotoUrl" onclick="changeImg()"><h2 id="blogFormId" style="display: inline;color: black;">0</h2>
+                        <input id="blogTitle" placeholder="blogTitle" style="margin-top: 5px;width: 100%;">
+                        <textarea id="blogSummary" placeholder="blogSummary" style="margin-top: 5px;width: 100%;"></textarea>
+
+                        <hr />
+                        <h3 id="authorId" style="margin-top: 5px;">0</h3>
+                        <div class="card mb-4 py-3 border-left-primary" style="padding: 0px;">
+                            <div class="card-body" style="padding: 0px;">
+                                <img style="display: inline;color: black;" id="AuthorImg" src="http://api.atduyar.com/Images/" class="imgPAT" />
+                                <h5 id="AuthorName" style="display: inline;color: black;"></h5>
+                                <p id="AuthorDes" style="float: right; max-width: 50%;"></p>
+                            </div>
+                        </div>
+                        <hr />
+                        <a onclick="editBlog()" class="btn btn-info btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-info-circle"></i>
+                            </span>
+                            <span class="text">Düzenle</span>
+                        </a>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="mainBlogCreaterDivATD" style="display: none;">
+
+    <link rel="stylesheet" type="text/css" href="~/BlogCreater/styles.css">
+    <link id="cssLink" rel="stylesheet" type="text/css" href="~/BlogCreater/dragon.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.2/web-animations.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/haltu/muuri@0.9.3/dist/muuri.min.js"></script>
+    <div class="drag-container"></div>
+
+    <div id="ATadd" class="ZaddAT">
+        <div class="card">
+            <div class="row">
+                <button id="ZaddButtonAT" type="button" class="btn btn-primary col-2" onclick="add()">Ekle</button>
+                <select id="ZATtype" class="">
+                    <option value="p">Yazı</option>
+                    <option value="h">Baslık</option>
+                    <option value="hr">Çizgi</option>
+                    <option value="img">Fotoğraf</option>
+                    <option value="video">Video</option>
+                    <option value="audio">Ses</option>
+                    <option value="html">Html</option>
+                    <option value="list">List</option>
+                </select>
+
+
+                <!-- <button type="button" onclick="dragEnabled(false)">false</button> -->
+                <!-- <button type="button" onclick="dragEnabled(true)">true</button> -->
+                <!-- <input type="checkbox" onchange="dragCheckbox()" checked="true">Drag</input> -->
+                <button id="ZbuttonAt" type="button" onclick="dragButton()">Drag</button>
+                <button id="ZbuttonCreateAt" type="button" onclick="createBlogContext()">Create</button>
+                <button id="ZbuttonBackAt" type="button" onclick="blogSaveData()">Save</button>
+                <button id="ZbuttonBackAt" type="button" onclick="backToBlogsList()">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="board">
+        <div class="board-column done">
+            <div class="board-column-container">
+                <div class="board-column-header">Blog</div>
+                <div class="board-column-content-wrapper">
+                    <div class="board-column-content" id="ATcards">
+
+
+                        @*<div typeat="img" class="board-item">
+                            <div class="board-item-content">
+                                <label>Image</label>
+                                <input type="submit" onclick="deleteCard(this)" value="Delete" class="ZbuttonDelete">
+                                <br>
+                                <input style="width: 95%" type="text" value="https://api.atduyar.com/BlogImages/Fitness.jpg" oninput="imgChange(this)">
+                                <br>
+                                <img src="https://api.atduyar.com/BlogImages/Fitness.jpg" alt="Image" width="95%" height="auto">
+                            </div>
+                        </div>
+                        <div typeat="h" class="board-item">
+                            <div class="board-item-content">
+                                <label>Header</label>
+                                <input type="submit" onclick="deleteCard(this)" value="Delete" class="ZbuttonDelete">
+                                <br>
+                                <select>
+                                    <option value="1" selected="">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                                <input type="checkbox" checked="">Center
+                                <br>
+                                <input style="width: 95%" type="text" value="Başlık">
+                            </div>
+                        </div>*@
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="board-column working">
+            <div class="board-column-container">
+                <div class="board-column-header">Test</div>
+                <div class="board-column-content-wrapper">
+                    <div class="board-column-content" id="ATtest">
+                        <!-- <div class="board-item"><div class="board-item-content"><span>Item #</span>11</div></div> -->
+                        <!-- <div class="board-item"><div class="board-item-content"><span>Item #</span>12</div></div> -->
+                        <!-- <div class="board-item"><div class="board-item-content"><span>Item #</span>13</div></div> -->
+                        <!-- <div class="board-item"><div class="board-item-content"><span>Item #</span>14</div></div> -->
+                        <!-- <div class="board-item"><div class="board-item-content"><span>Item #</span>15</div></div> -->
+                        <div class="board-item">
+                            <div class="board-item-content" id="ZtestAT">
+                                <!-- <iframe id="iframeAT" width="360px" height="540px"> </iframe> -->
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src='~/BlogCreater/script.js'></script>
+</div>
+
+<script src="https://kit.fontawesome.com/c9e2d7eaae.js" crossorigin="anonymous"></script>
+<script>
+    //function handler() {
+    //    var url = "";
+    //    var xhr = new XMLHttpRequest();
+
+    //    xhr.open('GET', url);
+    //    xhr.onreadystatechange = handler;
+    //    xhr.responseType = 'blob';
+    //    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+    //    xhr.send();
+
+    //    if (this.readyState === this.DONE) {
+    //        if (this.status === 200) {
+    //            // this.response is a Blob, because we set responseType above
+    //            var data_url = URL.createObjectURL(this.response);
+    //            document.getElementById("ViewBlogIframe").src = data_url;
+    //        } else {
+    //            console.error('no pdf :(');
+    //        }
+    //    }
+    //}
+
+    function selectBlog(blogId) {
+        httpR("/admin/getBlog", "?blogId=" + blogId, "GET", false, true, null, viewBlogHandler);
+
+    }
+
+    var sBlogsCB = false;
+    var sBlogs = document.getElementById("StatusBlogsColumsAT");
+    function selectStatusBlog(x) {
+        document.getElementById("statusInput").value = x.toString();
+        var sb = 0;
+        var ss = "";
+        for (var i = 0; i < sBlogs.children.length; i++) {
+            sb = parseInt(sBlogs.children[i].getAttribute("status"));
+            if (sBlogsCB) {
+                if (((0 ^ sb) & x) == 0)
+                    ss = "";
+                else
+                    ss = "display: none;";
+            } else {
+                if (((0 ^ sb) & x) != 0)
+                    ss = "";
+                else
+                    ss = "display: none;";
+            }
+
+            if ((sb >> 6) & 1 == 1) {//taslak mı?
+                ss += "border-bottom-color: #858796!important;";
+            }
+            else if (sb & 1 == 1) {//onaylanacak mı?
+                ss += "border-bottom-color: #1cc88a!important;";
+            }
+            else if ((sb >> 7) & 1 == 1) {//Düzenlenecek mı?
+                ss += "border-bottom-color: black!important;";
+            }
+            else if ((sb >> 1) & 1 == 1) {//Banlı mı?
+                ss += "border-bottom-color: red!important;";
+            }
+            else if ((sb >> 2) & 1 == 1) {//Gizli mı?
+                ss += "border-bottom-color: #f6c23e!important;";
+            }
+            else {//nomal
+                //sBlogs.children[i].style += "";
+            }
+            sBlogs.children[i].style = ss;
+        }
+    }
+
+    function selectStatusBlogCB(bol) {
+        sBlogsCB = bol;
+        selectStatusBlog(document.getElementById("statusInput").value);
+    }
+
+    function httpR(url, urle, metod, blob, authB, body, handler) {
+        var baseUrl = "https://api.atduyar.com/api";
+        var xhr = new XMLHttpRequest();
+        xhr.open(metod, baseUrl + url + urle);
+        xhr.onreadystatechange = handler;
+        if (blob)
+            xhr.setRequestHeader("Content-Type", "application/json");
+        if (authB)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + "@Model.Token.ToString()");
+        xhr.send(body);
+    }
+
+    function viewBlogHandler() {
+        if (this.readyState === this.DONE) {
+            if (this.status === 200) {
+
+
+                getBlogHtml(this.response);
+
+                //console.log(this.responseText);
+            } else {
+                console.error('no pdf :(');
+                alertify.error('Blog Gösterme Başarısız');
+            }
+        }
+    }
+
+    var blogJsonD;
+    function getBlogHtml(jsonG) {
+        blogJsonD = JSON.parse(jsonG);
+        json = blogJsonD;
+        console.log(json);
+
+        SetHtmlStatus(json.blogStatus);
+        sti = json.blogStatus;
+
+        document.getElementById("blogTitlePhotoUrl").src = json.blogTitlePhotoUrl;
+        document.getElementById("blogFormId").innerHTML = json.id;
+        document.getElementById("blogTitle").value = json.blogTitle;
+        document.getElementById("blogSummary").value = json.blogSummary;
+        document.getElementById("authorId").innerHTML = json.authorId;
+
+        var ls = document.getElementById("lblStatusAT").children;
+        for (var i = 0; i < ls.length; i++) {
+            ls[i].classList = "";
+        }
+        httpR("/admin/getAuthor", "?authorId=" + parseInt(json.authorId), "GET", false, true, null, viewAuthor);
+
+
+    }
+
+    function viewAuthor() {
+        if (this.readyState === this.DONE) {
+            if (this.status === 200) {
+                var json = JSON.parse(this.response);
+                console.log(json);
+
+                document.getElementById("AuthorImg").src = "http://api.atduyar.com/Images/" + json.authorAvatarUrl;
+                document.getElementById("AuthorName").innerHTML = json.authorName;
+                document.getElementById("AuthorDes").innerHTML = json.authorDescription;
+
+
+            } else {
+                console.error('no pdf :(');
+                alertify.error('Author Gösterme Başarısız');
+            }
+        }
+    }
+
+    function changeImg(){
+        var img = prompt("Resimi değistirin", document.getElementById("blogTitlePhotoUrl").src);
+        if (img != null) {
+
+            document.getElementById("blogTitlePhotoUrl").src = img;
+
+            //alertify.success('Resim Değisikliği Başarılı');
+        }
+        else {
+            //alertify.error('Resim değisikliği iptal');
+        }
+    }
+
+    function SetHtmlStatus(status) {
+        var ls = document.getElementById("lblStatusAT");
+        var st = status.toString(2);
+
+        var lsl = ls.children.length;
+        for (var i = 0; i < st.length; i++) {
+            ls.children[lsl - (i + 1)].innerHTML = st[st.length - (i + 1)];
+        }
+        for (var i = 0; i < lsl - st.length; i++) {
+            ls.children[i].innerHTML = 0;
+        }
+
+        var st = document.getElementById("chBoxe").getElementsByTagName("input");
+        for (var i = lsl - 1; i >= 0; i--) {
+            if (ls.children[i].innerHTML == "1")
+                st[lsl - (i + 1)].checked = true;
+            else
+                st[lsl - (i + 1)].checked = false;
+        }
+    }
+
+    var sti;
+    function SetStatus() {
+        var ls = document.getElementById("lblStatusAT");
+        var st = "";
+        sti = 0;
+
+        for (var i = 0; i < ls.children.length; i++) {
+            st += ls.children[i].innerHTML;
+        }
+        sti = parseInt(st, 2);
+        //alert(st);
+        //alert(sti);
+
+        //var postBodyS = '{"Id": ' + document.getElementById("blogFormId").innerHTML + ', "Nickname": "' + document.getElementById('NickName').value + '", "FirstName": "' + document.getElementById('FirstName').value + '", "LastName": "' + document.getElementById('LastName').value + '", "Email": "' + document.getElementById('Email').value + '", "AvatarUrl": "null","Description": "' + document.getElementById('Description').value + '"}';
+
+        //var postBody = JSON.parse(postBodyS);
+
+
+        //document.getElementById("blogFormId").innerHTML = json.id;
+        //document.getElementById("NickName").value = json.nickname;
+        //document.getElementById("FirstName").value = json.firstName;
+        //document.getElementById("LastName").value = json.lastName;
+        //document.getElementById("Email").value = json.email;
+        //document.getElementById("Description").value = json.description;
+
+        //httpR("/admin/getBlogViewById", "?blogId=" + blogId, "GET", false, true, null, viewBlogHandler);////////////////////////////////////////////////////////////
+        SetContent();
+
+        httpR("/admin/setBlogStatus", "?blogId=" + document.getElementById("blogFormId").innerHTML + "&status=" + sti, "GET", false, true, "", blogStatusUpdateR);
+    }
+    function CancelStatus() {
+
+    }
+
+    function SetContent() {
+
+        var postBodyS = { "Id": parseInt(document.getElementById("blogFormId").innerHTML), "authorId": parseInt(document.getElementById('authorId').innerHTML), "blogContent": blogJsonD.blogContent, "blogStatus": parseInt(sti), "blogSummary": document.getElementById('blogSummary').value, "blogTitle": document.getElementById('blogTitle').value, "blogTitlePhotoUrl": document.getElementById('blogTitlePhotoUrl').src };
+        console.log(postBodyS);
+
+        httpR("/admin/setBlogContent", "", "POST", true, true, JSON.stringify(postBodyS), blogUpdateR);
+    }
+    function editBlog() {
+        document.getElementById("mainBlogDivATD").style = "display: none;";
+        document.getElementById("mainBlogCreaterDivATD").style = "";
+
+        getBlogData(blogJsonD.blogContent);
+    }
+
+    function blogSaveData() {
+        blogJsonD.blogContent = createBlogContext();
+        alertify.success('Değisiklik kaydedildi.');
+    }
+
+    function backToBlogsList() {
+        createBlogContext();
+        alertify.confirm('Geri gitmek üzeresiniz.', 'Değisiklik kaydedilsin mi?',
+            function () {
+                blogSaveData();
+                SetContent();
+            },
+            function () {
+                alertify.error('Değisiklik iptal edildi.');
+            }
+        ).set('labels', { ok: 'Kaydet', cancel: 'Kaydetme!!' });
+
+        document.getElementById("mainBlogDivATD").style = "";
+        document.getElementById("mainBlogCreaterDivATD").style = "display: none;";
+    }
+
+
+    function blogUpdateR() {
+        if (this.readyState === this.DONE) {
+            if (this.status === 200) {
+                //// this.response is a Blob, because we set responseType above
+                //var data_url = URL.createObjectURL(this.response);
+                //document.getElementById("ViewBlogIframe").src = data_url;
+                var json = JSON.parse(this.responseText.toString());
+                console.log(json);
+                alertify.success('Blog Güncelleme Başarılı');
+            } else {
+                console.error('no pdf :(');
+                alertify.error('Blog Güncelleme Başarısız');
+            }
+        }
+    }
+
+    function blogStatusUpdateR() {
+        if (this.readyState === this.DONE) {
+            if (this.status === 200) {
+                var json = JSON.parse(this.responseText.toString());
+                console.log(json);
+                var id = document.getElementById("blogFormId").innerHTML;
+                selectBlog(id);
+
+
+                //////
+                var ls = document.getElementById("lblStatusAT");
+                var st = "";
+                var sti = 0;
+
+                for (var i = 0; i < ls.children.length; i++) {
+                    st += ls.children[i].innerHTML;
+                }
+                sti = parseInt(st, 2);
+                //////
+
+                //var dots = document.getElementById(("userCardId-" + id)).getElementsByTagName("span");
+                //dots[0].classList = st[st.length - 1] == "1" ? "dot baned" : "dot";
+                //dots[1].classList = st[st.length - 2] == "1" ? "dot baned" : "dot";
+                //dots[2].classList = st[st.length - 3] == "1" ? "dot baned" : "dot";
+                //dots[3].classList = (st[st.length - 7] == "1" || st[st.length - 8] == "1" || st[st.length - 9] == "1" || st[st.length - 10] == "1") == true ? "dot baned" : "dot";
+
+                alertify.success('Statu Güncelleme Başarılı');
+
+            } else {
+                console.error('no pdf :(');
+                alertify.error('Statu Güncelleme Başarısız');
+            }
+        }
+    }
+
+    function statusInput(el, st) {
+        //if (el.checked) {
+        //    el.checked = false;
+        //} else {
+        //    el.checked = true;
+        //}
+        var ls = document.getElementById("lblStatusAT").children[st];
+        if (ls.classList[0] == "statuC") {
+            ls.classList = "";
+        } else {
+            ls.classList = "statuC";
+        }
+        if (ls.innerHTML == "1") {
+            ls.innerHTML = "0";
+        } else {
+            ls.innerHTML = "1";
+        }
+
+        //document.getElementById("lblStatusAT").children[st].classList = (el.checked == true) ? "baned" : "";
+    }
+
+    //function updateIframeBody(text){
+    //    var myFrame = document.getElementById("ViewBlogIframe");
+    //    var myFramey = (myFrame.contentWindow || myFrame.contentDocument);
+    //    if (myFramey.document)myFramey = myFramey.document;
+    //    //var myFrame = document.getElementById("iframeAT").contents().find('body');
+    //    myFramey.body.innerHTML = text;
+    //}
+
+    var SelectBlog;
+    var SelectBlogSize = 0;
+    function blogsSizeSelect(size, event) {
+        if (size == SelectBlogSize) {
+            SelectBlogSize = 0;
+            event.style = "";
+            SelectBlog = null;
+            document.getElementById("BlogsColumsAT").style = "";
+        } else {
+            if (SelectBlog != null) {
+                SelectBlog.style = "";
+            }
+            event.style = "color: #C517F5;";
+            document.getElementById("BlogsColumsAT").style = "column-count: " + size + ";";
+            SelectBlogSize = size;
+            SelectBlog = event;
+        }
+    }
+
+    
+    var upsideDownB = false;
+    function upsideDown() {
+        if (upsideDownB) {
+            upsideDownB = false;
+            document.getElementById("BlogsColumsAT").classList.remove("upsideDown");
+            document.getElementById("StatusBlogsColumsAT").classList.remove("upsideDown");
+        } else {
+            upsideDownB = true;
+            document.getElementById("BlogsColumsAT").classList.add("upsideDown");
+            document.getElementById("StatusBlogsColumsAT").classList.add("upsideDown");
+        }
+    }
+</script>

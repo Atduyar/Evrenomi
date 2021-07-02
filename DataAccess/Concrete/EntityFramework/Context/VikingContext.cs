@@ -18,6 +18,15 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<BlogComment> BlogComments { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<BlogTag> BlogTags { get; set; }
+        public DbSet<BlogEmoji> Blogemojis { get; set; }
+        public DbSet<BlogEmojiView> Blogemoji_views { get; set; }
+        public DbSet<BlogEmojiViewView> Blogemojiview_views { get; set; }
+        public DbSet<BlogEmojiCountView> Blogemojicount_views { get; set; }
+        public DbSet<UserNotification> UserNotifications { get; set; }
 
         //public DbSet<User> Users { get; set; }
         //public DbSet<OperationClaim> OperationClaims { get; set; }

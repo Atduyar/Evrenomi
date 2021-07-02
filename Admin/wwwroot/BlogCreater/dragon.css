@@ -1,0 +1,11 @@
+.board-item {
+  position: absolute;
+  width: calc(100% - 16px);
+  margin: 8px;
+}
+#ZbuttonAt{
+	background: #2ad06d;
+}
+.ZbuttonDelete{
+	display: none;
+}

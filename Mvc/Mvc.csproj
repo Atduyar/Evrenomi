@@ -10,10 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\img\pp_default.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Folder Include="Models\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

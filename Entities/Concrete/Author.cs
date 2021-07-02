@@ -1,11 +1,14 @@
-﻿namespace Entities.Concrete
+﻿using Core.Entities.Abstract;
+
+namespace Entities.Concrete
 {
-    public class Author
+    public class Author:IEntity
     {
-        public string AuthorId { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
         public string AuthorName { get; set; }
         public string AuthorAvatarUrl { get; set; }
         public string AuthorDescription { get; set; }
-        public string AuthorStatus { get; set; }
+        public int AuthorStatus { get; set; }
     }
 }
