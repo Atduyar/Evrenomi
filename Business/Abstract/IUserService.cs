@@ -15,6 +15,7 @@ namespace Business.Abstract
         IDataResult<User> GetById(int id,Status.Per per);
         IDataResult<User> GetByEmail(string email);
         IDataResult<User> GetByNickname(string nickname);
+        IDataResult<User> GetByNickname(string nickname, Status.Per per);
         IDataResult<User> GetByEmailOrNickname(string emailOrNickname);
         IResult Update(int id, UserDetailsDto userUpdate, Status.Per per);
         IResult UpdateStatus(int id, int status, Status.Per per);

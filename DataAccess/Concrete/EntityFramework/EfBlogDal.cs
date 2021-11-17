@@ -15,22 +15,22 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfBlogDal:EfEntityRepositoryBase<Blog,VikingContext>,IBlogDal
     {
-        public List<Blog> GetSearchList(List<string> filters = null)
+        public List<Blog> GetSearchList(List<string> text = null, Expression<Func<Blog, bool>> filter = null)
         {
             using (var context = new VikingContext())
             {
-                if (filters == null)
+                if (text == null)
                 {
                     return context.Set<Blog>().ToList();
                 }
                 else
                 {
-                    filters.Reverse();//ilk sıradaki öncelikli
+                    text.Reverse();//ilk sıradaki öncelikli
                     var query = Enumerable.Empty<Blog>().AsQueryable();//context.Set<Blog>().AsQueryable();
-                    foreach (var filter in filters)
+                    foreach (var t in text)
                     {
                         //query = query.Where(b => b.BlogTitle.Contains(filter));
-                        query = query.Concat(context.Set<Blog>().Where(b => b.BlogTitle.Contains(filter)));
+                        query = query.Concat(context.Set<Blog>().Where(b => b.BlogTitle.Contains(t)));
                     }
                     //var sirala = query.GroupBy(x => x)
                     //    .Where(g => g.Count() > 1)
@@ -40,6 +40,7 @@ namespace DataAccess.Concrete.EntityFramework
                         .Select(y => new {Element = y.Key, Counter = y.Count()})
                         .OrderBy(w => w.Counter)
                         .Select(z => z.Element)
+                        .Where(filter)
                         .ToList(); 
 
                     return blogs;

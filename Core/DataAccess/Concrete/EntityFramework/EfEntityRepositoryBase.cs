@@ -17,9 +17,19 @@ namespace Core.DataAccess.Concrete.EntityFramework
         {
             using (TContext context = new TContext())
             {
-                return filter == null ? 
-                    context.Set<TEntity>().ToList() : 
+                return filter == null ?
+                    context.Set<TEntity>().ToList() :
                     context.Set<TEntity>().Where(filter).ToList();
+            }
+        }
+
+        public IEnumerable<TEntity> GetListEnumerable(Expression<Func<TEntity, bool>> filter = null)
+        {
+            using (TContext context = new TContext())
+            {
+                return filter == null ?
+                    context.Set<TEntity>() :
+                    context.Set<TEntity>().Where(filter);
             }
         }
 

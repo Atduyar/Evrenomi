@@ -64,14 +64,13 @@ namespace Business.Concrete
 
             var result = new CommentForBlog
                 {
+                    BlogId = c.BlogId,
                     CommentId = c.Id,
                     CommentDate = _dateTimeHelper.SetTime(c.CommentDate),
                     CommentResponse = GetByCommentResponse(c.Id).Data.Count,
                     Text = c.Text,
-                    UserId = c.UserId,
-                    UserNickname = user.Data.ToDetail().Nickname,
-                    UserAvatarUrl = user.Data.ToDetail().AvatarUrl
-                };
+                    UserSummary = new UserSummaryDto(){Id = c.UserId, Nickname = user.Data.ToDetail().Nickname, AvatarUrl = user.Data.ToDetail().AvatarUrl}
+            };
 
             return new SuccessDataResult<CommentForBlog>(result);
         }
@@ -88,13 +87,13 @@ namespace Business.Concrete
             var result = from c in comments.Data
                 select new CommentForBlog
                 {
+                    BlogId = blog.Data.Id,
                     CommentId = c.Id,
                     CommentDate = _dateTimeHelper.SetTime(c.CommentDate),
                     CommentResponse = GetByCommentResponse(c.Id).Data.Count,
                     Text = c.Text,
-                    UserId = c.UserId,
-                    UserNickname = _userService.GetById(c.UserId,Status.Per.System).Data.ToDetail().Nickname,
-                    UserAvatarUrl = _userService.GetById(c.UserId,Status.Per.System).Data.ToDetail().AvatarUrl
+
+                    UserSummary = new UserSummaryDto() { Id = c.UserId, Nickname = _userService.GetById(c.UserId, Status.Per.System).Data.ToDetail().Nickname, AvatarUrl = _userService.GetById(c.UserId, Status.Per.System).Data.ToDetail().AvatarUrl }
                 };
 
             return new SuccessDataResult<List<CommentForBlog>>(result.ToList());
@@ -108,12 +107,12 @@ namespace Business.Concrete
                 select new CommentForBlog
                 {
                     CommentId = c.Id,
+                    BlogId = c.BlogId,
                     CommentDate = _dateTimeHelper.SetTime(c.CommentDate),
                     CommentResponse = GetByCommentResponse(c.Id).Data.Count,
                     Text = c.Text,
-                    UserId = c.UserId,
-                    UserNickname = _userService.GetById(c.UserId,Status.Per.System).Data.ToDetail().Nickname,
-                    UserAvatarUrl = _userService.GetById(c.UserId, Status.Per.System).Data.ToDetail().AvatarUrl
+
+                    UserSummary = new UserSummaryDto() { Id = c.UserId, Nickname = _userService.GetById(c.UserId, Status.Per.System).Data.ToDetail().Nickname, AvatarUrl = _userService.GetById(c.UserId, Status.Per.System).Data.ToDetail().AvatarUrl }
                 };
             
             return new SuccessDataResult<List<CommentForBlog>>(result.ToList());

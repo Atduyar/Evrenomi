@@ -9,6 +9,7 @@ namespace Business.Abstract
         IDataResult<BlogTag> GetById(int id);
         IDataResult<List<BlogTag>> GetByBlogId(int blogId);
         IDataResult<List<BlogTag>> GetByTagId(int tagId);
+        IDataResult<BlogTag> GetByBlogIdAndTagId(int blogId, int tagId);
         IDataResult<List<BlogTag>> GetList();
         IResult Add(BlogTag BlogTag);
         IResult Update(BlogTag BlogTag);

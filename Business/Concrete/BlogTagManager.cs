@@ -31,6 +31,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<BlogTag>>(_blogTagDal.GetList(bt => bt.TagId == tagId));
         }
 
+        public IDataResult<BlogTag> GetByBlogIdAndTagId(int blogId, int tagId)
+        {
+            return new SuccessDataResult<BlogTag>(_blogTagDal.Get(bt => bt.TagId == tagId && bt.BlogId == blogId));
+        }
+
         public IDataResult<List<BlogTag>> GetList()
         {
             return new SuccessDataResult<List<BlogTag>>(_blogTagDal.GetList());

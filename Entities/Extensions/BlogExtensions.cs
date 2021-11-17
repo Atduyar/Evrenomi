@@ -9,13 +9,13 @@ namespace Entities.Extensions
 {
     public static class BlogExtensions
     {
-        public static BlogDetailDto ToDetail(this Blog blog, AuthorSummaryDto authorSummary, List<Tag> tags)
+        public static BlogDetailDto ToDetail(this Blog blog, User user, List<Tag> tags)
         {
             //Foo json = JsonConvert.DeserializeObject<Foo>(str);
             return new BlogDetailDto
             {
                 BlogId = blog.Id,
-                AuthorSummary = authorSummary,
+                AuthorSummary = user.ToSummary(),
                 BlogTitle = blog.BlogTitle,
                 BlogSummary = blog.BlogSummary,
                 BlogTitlePhotoUrl = blog.BlogTitlePhotoUrl,
@@ -25,7 +25,7 @@ namespace Entities.Extensions
                 //BlogContent = blog.BlogContent
             };
         }
-        public static BlogDetailDto ToDetail(this Blog blog, IDataResult<Author> authorSummary, IDataResult<List<Tag>> tags)
+        public static BlogDetailDto ToDetail(this Blog blog, IDataResult<User> user, IDataResult<List<Tag>> tags)
         {
             //Foo json = JsonConvert.DeserializeObject<Foo>(str);
             List<Tag> Btags;
@@ -38,12 +38,12 @@ namespace Entities.Extensions
                 Btags = new List<Tag>();
             }
 
-            if (authorSummary.Success)
+            if (user.Success)
             {
                 return new BlogDetailDto
                 {
                     BlogId = blog.Id,
-                    AuthorSummary = authorSummary.Data.ToSummary(),
+                    AuthorSummary = user.Data.ToSummary(),
                     BlogTitle = blog.BlogTitle,
                     BlogSummary = blog.BlogSummary,
                     BlogTitlePhotoUrl = blog.BlogTitlePhotoUrl,
@@ -85,22 +85,57 @@ namespace Entities.Extensions
         //    };
         //}
 
+        public static BlogSummaryDto ToSummary(this Blog blog, string authorName, IDataResult<List<Tag>> tags)
+        {
+            return new BlogSummaryDto
+            {
+                BlogTitle = blog.BlogTitle,
+                BlogSummary = blog.BlogSummary,
+                BlogTitlePhotoUrl = blog.BlogTitlePhotoUrl,
+                BlogId = blog.Id,
+                BlogTags = tags.Data,
+                Readed = false,
+                Views = -1,
+                AuthorName = authorName
+            };
+        }
+        public static BlogSummaryDto ToSummary(this Blog blog, string authorName, List<Tag> tags)
+        {
+            return new BlogSummaryDto
+            {
+                BlogTitle = blog.BlogTitle,
+                BlogSummary = blog.BlogSummary,
+                BlogTitlePhotoUrl = blog.BlogTitlePhotoUrl,
+                BlogId = blog.Id,
+                BlogTags = tags,
+                Readed = false,
+                Views = -1,
+                AuthorName = authorName
+            };
+        }
+        public static BlogSummaryDto ToSummary(this Blog blog, string authorName)
+        {
+            return new BlogSummaryDto
+            {
+                BlogTitle = blog.BlogTitle,
+                BlogSummary = blog.BlogSummary,
+                BlogTitlePhotoUrl = blog.BlogTitlePhotoUrl,
+                BlogId = blog.Id,
+                Readed = false,
+                Views = -1,
+                AuthorName = authorName
+            };
+        }
         public static BlogSummaryDto ToSummary(this Blog blog)
         {
             return new BlogSummaryDto
             {
-            };
-        }
-        public static AuthorSummaryDto ToSummary(this Author author)
-        {
-            //Foo json = JsonConvert.DeserializeObject<Foo>(str);
-            return new AuthorSummaryDto()
-            {
-                UserId = author.UserId,
-                AuthorAvatarUrl = author.AuthorAvatarUrl,
-                AuthorId = author.Id,
-                AuthorName = author.AuthorName,
-                AuthorDescription = author.AuthorDescription
+                BlogTitle = blog.BlogTitle,
+                BlogSummary = blog.BlogSummary,
+                BlogTitlePhotoUrl = blog.BlogTitlePhotoUrl,
+                BlogId = blog.Id,
+                Readed = false,
+                Views = -1
             };
         }
     }

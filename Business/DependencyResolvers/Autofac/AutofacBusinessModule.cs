@@ -48,9 +48,6 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<TagManager>().As<ITagService>();
             builder.RegisterType<EfTagDal>().As<ITagDal>();
 
-            builder.RegisterType<AuthorManager>().As<IAuthorService>();
-            builder.RegisterType<EfAuthorDal>().As<IAuthorDal>();
-
             builder.RegisterType<BlogCommentManager>().As<IBlogCommentService>();
             builder.RegisterType<EfBlogCommentDal>().As<IBlogCommentDal>();
 

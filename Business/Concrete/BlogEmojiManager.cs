@@ -41,6 +41,11 @@ namespace Business.Concrete
             return new SuccessDataResult<BlogEmoji>(_blogEmojiDal.Get(be => be.BlogId == blogEmojiView.Id && be.UserId == blogEmojiView.UserId && be.EmojiId == blogEmojiView.EmojiId));
         }
 
+        public IDataResult<List<BlogEmoji>> GetByUserIdAndEmojiId(int userId, int emojiId)
+        {
+            return new SuccessDataResult<List<BlogEmoji>>(_blogEmojiDal.GetList(be => be.UserId == userId && be.EmojiId == emojiId));
+        }
+
         public IDataResult<List<BlogEmoji>> GetList()
         {
             return new SuccessDataResult<List<BlogEmoji>>(_blogEmojiDal.GetList());

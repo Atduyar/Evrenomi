@@ -8,7 +8,7 @@ namespace Entities.Dtos
     {
         public int BlogId { get; set; }
         //public int AuthorId { get; set; }
-        public AuthorSummaryDto AuthorSummary { get; set; }
+        public UserSummaryDto AuthorSummary { get; set; }
         public DateTime BlogDate { get; set; }
         public string BlogTitle { get; set; }
         public string BlogTitlePhotoUrl { get; set; }

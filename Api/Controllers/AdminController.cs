@@ -30,16 +30,14 @@ namespace Api.Controllers
         private IUserService _userService;
         private IOperationClaimService _operationClaimService;
         private IUserOperationClaimService _userOperationClaimService;
-        private IAuthorService _authorService;
         private IBlogService _blogService;
         private IBlogTagService _blogTagService;
 
-        public AdminController(IUserService userService, IOperationClaimService operationClaimService, IUserOperationClaimService userOperationClaimService, IAuthorService authorService, IBlogService blogService, IBlogTagService blogTagService)
+        public AdminController(IUserService userService, IOperationClaimService operationClaimService, IUserOperationClaimService userOperationClaimService, IBlogService blogService, IBlogTagService blogTagService)
         {
             _userService = userService;
             _operationClaimService = operationClaimService;
             _userOperationClaimService = userOperationClaimService;
-            _authorService = authorService;
             _blogService = blogService;
             _blogTagService = blogTagService;
         }
@@ -84,26 +82,26 @@ namespace Api.Controllers
             return Ok(blog);
         }
 
-        [HttpGet("getAuthor")]
-        [Authorize(Roles = "Admin")]
-        public IActionResult GetAuthor(int authorId)
-        {
-            var author = _authorService.GetById(authorId/*, Status.Per.Admin*/).Data;
+        //[HttpGet("getAuthor")]
+        //[Authorize(Roles = "Admin")]
+        //public IActionResult GetAuthor(int authorId)
+        //{
+        //    var author = _authorService.GetById(authorId/*, Status.Per.Admin*/).Data;
 
-            //BlogDetailDto blogDetailsDto = new BlogDetailDto
-            //{
-            //    BlogId = blog.Id,
-            //    BlogTitle = blog.BlogTitle,
-            //    AuthorId = blog.AuthorId,
-            //    BlogTitlePhotoUrl = blog.BlogTitlePhotoUrl,
-            //    BlogContent = blog.BlogContent,
-            //    BlogDate = blog.BlogDate,
-            //    BlogTags = String.Join(",", _blogService.GetTags(blogId).Data.Select(t => t.Name)),
-            //    BlogSummary = blog.BlogSummary
-            //};
-            //return Ok(blogDetailsDto);
-            return Ok(author);
-        }
+        //    //BlogDetailDto blogDetailsDto = new BlogDetailDto
+        //    //{
+        //    //    BlogId = blog.Id,
+        //    //    BlogTitle = blog.BlogTitle,
+        //    //    AuthorId = blog.AuthorId,
+        //    //    BlogTitlePhotoUrl = blog.BlogTitlePhotoUrl,
+        //    //    BlogContent = blog.BlogContent,
+        //    //    BlogDate = blog.BlogDate,
+        //    //    BlogTags = String.Join(",", _blogService.GetTags(blogId).Data.Select(t => t.Name)),
+        //    //    BlogSummary = blog.BlogSummary
+        //    //};
+        //    //return Ok(blogDetailsDto);
+        //    return Ok(author);
+        //}
 
         [HttpPost("getBlogView")]
         [Authorize(Roles = "Admin,Author")]
@@ -160,25 +158,25 @@ namespace Api.Controllers
         }
 
         //Yazar ekleme
-        [HttpPost("addAuthor")]
-        [Authorize(Roles = "Admin")]
-        public IActionResult AddAuthor(AuthorForRegister authorForRegister)
-        {
+        //[HttpPost("addAuthor")]
+        //[Authorize(Roles = "Admin")]
+        //public IActionResult AddAuthor(AuthorForRegister authorForRegister)
+        //{
 
-            var author = _authorService.Add(new Author
-            {
-                UserId = authorForRegister.UserId,
-                AuthorName = authorForRegister.AuthorName,
-                AuthorDescription = authorForRegister.AuthorDescription,
-                AuthorAvatarUrl = authorForRegister.AuthorAvatarUrl,
-                AuthorStatus = 1
-            });
-            if (!author.Success)
-            {
-                return BadRequest(new ErrorResponseDto { Operation = System.Reflection.MethodBase.GetCurrentMethod().Name, ErrorMessages = author.Message });
-            }
-            return Ok(author.Message);
-        }
+        //    var author = _authorService.Add(new Author
+        //    {
+        //        UserId = authorForRegister.UserId,
+        //        AuthorName = authorForRegister.AuthorName,
+        //        AuthorDescription = authorForRegister.AuthorDescription,
+        //        AuthorAvatarUrl = authorForRegister.AuthorAvatarUrl,
+        //        AuthorStatus = 1
+        //    });
+        //    if (!author.Success)
+        //    {
+        //        return BadRequest(new ErrorResponseDto { Operation = System.Reflection.MethodBase.GetCurrentMethod().Name, ErrorMessages = author.Message });
+        //    }
+        //    return Ok(author.Message);
+        //}
 
         //Blogları status e göre çeker
         [HttpGet("getAllBlogByStatus")]

@@ -31,12 +31,12 @@ namespace Business.Concrete
 
         public IDataResult<List<User>> GetList(Status.Per per)
         {
-            return new SuccessDataResult<List<User>>(_userDal.GetList(u => (((Status.GetUserByIdFilter(per) | u.Status) & (2147483647 - (Status.GetUserByIdFilter(per) & u.Status))) & Status.GetUserByIdMask(per)) == 0).ToList());
+            return new SuccessDataResult<List<User>>(_userDal.GetList(u => (((Status.GetUserFilter(per) | u.Status) & (2147483647 - (Status.GetUserFilter(per) & u.Status))) & Status.GetUserMask(per)) == 0).ToList());
         }
 
         public IDataResult<List<UserSummaryDto>> GetListSummary(Status.Per per)
         {
-            var user = new SuccessDataResult<List<User>>(_userDal.GetList(u => (((Status.GetUserByIdFilter(per) | u.Status) & (2147483647 - (Status.GetUserByIdFilter(per) & u.Status))) & Status.GetUserByIdMask(per)) == 0).ToList()).Data;
+            var user = new SuccessDataResult<List<User>>(_userDal.GetList(u => (((Status.GetUserFilter(per) | u.Status) & (2147483647 - (Status.GetUserFilter(per) & u.Status))) & Status.GetUserMask(per)) == 0).ToList()).Data;
             var result = from u in user
                 select new UserSummaryDto
                 {
@@ -53,7 +53,7 @@ namespace Business.Concrete
             if (per == Status.Per.System)
                 user = _userDal.Get(u => u.Id == id );
             else
-                user = _userDal.Get(u => u.Id == id && (((Status.GetUserByIdFilter(per) | u.Status) & (2147483647 - (Status.GetUserByIdFilter(per) & u.Status))) & Status.GetUserByIdMask(per)) == 0);
+                user = _userDal.Get(u => u.Id == id && (((Status.GetUserFilter(per) | u.Status) & (2147483647 - (Status.GetUserFilter(per) & u.Status))) & Status.GetUserMask(per)) == 0);
             if (user != null)
             {
                 return new SuccessDataResult<User>(user);
@@ -69,6 +69,21 @@ namespace Business.Concrete
         public IDataResult<User> GetByNickname(string nickname)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Nickname == nickname));
+        }
+
+
+        public IDataResult<User> GetByNickname(string nickname, Status.Per per)
+        {
+            User user;
+            if (per == Status.Per.System)
+                user = _userDal.Get(u => u.Nickname == nickname);
+            else
+                user = _userDal.Get(u => u.Nickname == nickname && (((Status.GetUserFilter(per) | u.Status) & (2147483647 - (Status.GetUserFilter(per) & u.Status))) & Status.GetUserMask(per)) == 0);
+            if (user != null)
+            {
+                return new SuccessDataResult<User>(user);
+            }
+            return new ErrorDataResult<User>(Messages.UserNotFound);
         }
 
         public IDataResult<User> GetByEmailOrNickname(string emailOrNickname)

@@ -34,22 +34,316 @@ namespace Api.Controllers
         private IBlogEmojiViewService _blogEmojiViewService;
         private IBlogEmojiService _blogEmojiService;
         private IUserService _userService;
-        private IAuthorService _authorService;
         private IUserNotificationService _userNotificationService;
         private IDateTimeHelper _dateTimeHelper;
+        private IBlogTagService _blogTagService;
+        private ITagService _tagService;
 
-        public BlogsController(IBlogService blogService, IBlogCommentService blogCommentService, IUserService userService, IBlogEmojiViewService blogEmojiViewService, IBlogEmojiService blogEmojiService, IAuthorService authorService, IDateTimeHelper dateTimeHelper, IUserNotificationService userNotificationService)
+        public BlogsController(IBlogService blogService, IBlogCommentService blogCommentService, IUserService userService, IBlogEmojiViewService blogEmojiViewService, IBlogEmojiService blogEmojiService, IDateTimeHelper dateTimeHelper, IUserNotificationService userNotificationService, IBlogTagService blogTagService, ITagService tagService)
         {
             _blogService = blogService;
             _blogCommentService = blogCommentService;
             _userService = userService;
             _blogEmojiViewService = blogEmojiViewService;
             _blogEmojiService = blogEmojiService;
-            _authorService = authorService;
             _dateTimeHelper = dateTimeHelper;
             _userNotificationService = userNotificationService;
+            _blogTagService = blogTagService;
+            _tagService = tagService;
         }
 
+        [HttpGet("addBlog")]
+        [Authorize]
+        public IActionResult addBlog(BlogDetailDto blogDetailDto)
+        {
+            var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var blog = _blogService.Add(new Blog
+            {
+                AuthorId = userId,
+                BlogTitle = blogDetailDto.BlogTitle,
+                BlogSummary = blogDetailDto.BlogSummary,
+                BlogTitlePhotoUrl = blogDetailDto.BlogTitlePhotoUrl,
+                BlogDate = DateTime.Now, //blogDetailDto.BlogDate,
+                BlogContent = JsonConvert.SerializeObject(blogDetailDto.BlogContent), //blogDetailDto.BlogContent,
+                BlogStatus = Status.Approval
+            });
+
+            if (!blog.Success)
+            {
+                return BadRequest(blog);
+            }
+
+            if (blog.Success)
+            {
+                List<Tag> tagNames = blogDetailDto.BlogTags;
+                for (int i = 0; i < tagNames.Count; i++)
+                {
+                    var tag = _tagService.GetById(tagNames[i].Id);
+                    if (!tag.Success)
+                    {
+                        continue;
+                    }
+                    _blogTagService.Add(new BlogTag
+                    {
+                        BlogId = blog.Data,
+                        TagId = tag.Data.Id,
+                    });
+                }
+            }
+
+
+            return Ok(blog);
+        }
+
+        [HttpGet("addBlogDraft")]
+        [Authorize]
+        public IActionResult addBlogDraft(string blogTitle)
+        {
+            if (string.IsNullOrWhiteSpace(blogTitle))
+            {
+                return BadRequest(Messages.BlogTitleEmpty);
+            }
+            var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var blog = _blogService.Add(new Blog
+            {
+                AuthorId = userId,
+                BlogTitle = blogTitle,
+                BlogSummary = "-",
+                BlogContent = "[]",
+                BlogDate = DateTime.Now, //blogDetailDto.BlogDate,
+                BlogStatus = Status.DefBlog | Status.Hidden
+            });
+
+            if (!blog.Success)
+            {
+                return BadRequest(blog);
+            }
+
+            return Ok(blog);
+        }
+        [HttpPost("updateBlog")]
+        [Authorize]
+        public IActionResult updateBlog(BlogDetailDto blogDetailDto)
+        {
+            var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var blog = _blogService.GetById(blogDetailDto.BlogId, Status.Per.System);
+
+            if (!blog.Success)
+            {
+                return BadRequest(blog);
+            }
+
+            if (userId != blog.Data.AuthorId)
+            {
+                return BadRequest(Messages.BlogNotAccessible);
+            }
+
+            blog.Data.BlogTitle = blogDetailDto.BlogTitle;
+            blog.Data.BlogTitlePhotoUrl = blogDetailDto.BlogTitlePhotoUrl;
+            blog.Data.BlogSummary = blogDetailDto.BlogSummary;
+            blog.Data.BlogContent = JsonConvert.SerializeObject(blogDetailDto.BlogContent);
+            blog.Data.BlogDate = DateTime.Now;
+
+            var blogU = _blogService.Update(blog.Data);
+
+            if (!blogU.Success)
+            {
+                return BadRequest(blogU);
+            }
+
+            var tags = _blogTagService.GetByBlogId(blog.Data.Id);
+            if (!tags.Success)
+            {
+                return BadRequest(tags);
+            }
+
+            var blogTags = tags.Data.Select(bt => bt.TagId);
+            //return Ok(_tagService.GetByName("Robot"));
+            var getNewTags = blogDetailDto.BlogTags.Select(bt => _tagService.GetByName(bt.Name)).Where(t => t.Success && t.Data != null).Select(td => td.Data);
+            //return Ok(getNewTags);
+            var blogTagsNew = getNewTags.Select(bt => bt.Id);
+            //return Ok(blogTagsNew);
+            var removeList = blogTags.Except(blogTagsNew).ToList();
+            var addList = blogTagsNew.Except(blogTags).ToList();
+            //return Ok(removeList);
+            for (int i = 0; i < removeList.Count(); i++)
+            {
+                var deleteTag = _blogTagService.GetByBlogIdAndTagId(blog.Data.Id, removeList[i]);
+                if (deleteTag.Success)
+                {
+                    _blogTagService.Delete(deleteTag.Data);
+                }
+            }
+            for (int i = 0; i < addList.Count(); i++)
+            {
+                _blogTagService.Add(new BlogTag() { BlogId = blog.Data.Id, TagId = addList[i] });
+            }
+            //if (blogU.Success)
+            //{
+            //    List<Tag> tagNames = blogDetailDto.BlogTags;
+            //    var tagNamesOld = _blogTagService.GetByBlogId(blog.Data.Id);
+            //    if (!tagNamesOld.Success)
+            //    {
+            //        return BadRequest(tagNamesOld);
+            //    }
+
+            //    for (int i = 0; i < tagNames.Count; i++)
+            //    {
+            //        ////////////////////////////////////////tag varsa ekle sil ayarla iste
+            //        var tag = _tagService.GetById(tagNames[i].Id);
+            //        if (!tag.Success)
+            //        {
+            //            continue;
+            //        }
+            //        _blogTagService.Add(new BlogTag
+            //        {
+            //            BlogId = blog.Data.Id,
+            //            TagId = tag.Data.Id,
+            //        });
+            //    }
+            //}
+
+            return Ok(blog.Data.ToDetail(_userService.GetById(blog.Data.AuthorId, Status.Per.System), _blogService.GetTags(blog.Data.Id)));
+        }
+        [HttpGet("publishBlog")]
+        [Authorize]
+        public IActionResult publishBlogDraft(int blogId)
+        {
+            var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var blog = _blogService.GetById(blogId, Status.Per.System);
+            if (!blog.Success)
+            {
+                return BadRequest(blog);
+            }
+
+            if (blog.Data.AuthorId != userId)
+            {
+                return BadRequest(Messages.BlogNotAccessible);
+            }
+
+            if ((blog.Data.BlogStatus & Status.Hidden) == 0)//taslak değil se
+            {
+                return BadRequest(Messages.BlogAlreadyPublish);
+            }
+
+            var blogU = _blogService.UpdateStatus(blog.Data.Id, blog.Data.BlogStatus - Status.Hidden, Status.Per.System);// Status.Per.Me olarak ayarla
+
+            if (!blogU.Success)
+            {
+                return BadRequest(blogU);
+            }
+
+
+            return Ok(blogU);
+        }
+
+        [HttpGet("unPublishBlog")]
+        [Authorize]
+        public IActionResult unPublishBlogDraft(int blogId)
+        {
+            var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var blog = _blogService.GetById(blogId, Status.Per.System);
+            if (!blog.Success)
+            {
+                return BadRequest(blog);
+            }
+
+            if (blog.Data.AuthorId != userId)
+            {
+                return BadRequest(Messages.BlogNotAccessible);
+            }
+
+            if ((blog.Data.BlogStatus & Status.Hidden) == Status.Hidden)//taslak değil se
+            {
+                return BadRequest(Messages.BlogAlreadyPublish);
+            }
+
+            var blogU = _blogService.UpdateStatus(blog.Data.Id, blog.Data.BlogStatus + Status.Hidden, Status.Per.System);// Status.Per.Me olarak ayarla
+
+            if (!blogU.Success)
+            {
+                return BadRequest(blogU);
+            }
+
+
+            return Ok(blogU);
+        }
+
+        [HttpGet("getBlogDraft")]
+        [Authorize]
+        public IActionResult GetBlogDraft(int id)
+        {
+            var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var blog = _blogService.GetById(id, Status.Per.System);
+
+            if (!blog.Success)
+            {
+                return BadRequest(blog);
+            }
+            if (userId != blog.Data.AuthorId)
+            {
+                return BadRequest(Messages.BlogNotAccessible);
+            }
+
+            return Ok(blog.Data.ToDetail(_userService.GetById(blog.Data.AuthorId, Status.Per.System), _blogService.GetTags(blog.Data.Id)));
+        }
+        [HttpGet("getMyBlogs")]
+        [Authorize]
+        public IActionResult getMyBlogs(int pageId, int pageSize = 20)
+        {
+            var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (pageSize > 40)
+                pageSize = 40;
+            if (pageSize < 1)
+                pageSize = 1;
+            --pageId;
+
+            var pageFiliter = new BlogPageFilter();
+            pageFiliter.PageNumber = pageId;
+            pageFiliter.PageSize = pageSize;
+
+            //var blogs = _blogService.getUserBlog(userId, Status.Per.System);
+            var blogs = _blogService.GetByAuthorId(userId, pageFiliter, Status.Per.System);
+            if (!blogs.Success)
+            {
+                return BadRequest(blogs);
+            }
+
+            return Ok(blogs.Data);
+        }
+
+        [HttpGet("deleteBlog")]
+        [Authorize]
+        public IActionResult deleteBlog(int blogId)
+        {
+            var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var blog = _blogService.GetById(blogId, Status.Per.System);
+            if (!blog.Success)
+            {
+                return BadRequest(blog);
+            }
+
+            if (blog.Data.AuthorId != userId)
+            {
+                return BadRequest(Messages.BlogNotAccessible);
+            }
+
+            var result = _blogService.Delete(blog.Data);
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+
+            var resultTag = _blogTagService.GetByBlogId(blog.Data.Id);
+            for (int i = 0; i < resultTag.Data.Count; i++)
+            {
+                _blogTagService.Delete(resultTag.Data[i]);
+            }
+
+            return Ok(result);
+        }
         //blog detail i ceker
         //[HttpGet("getBlogView")]
         //[Authorize]
@@ -90,6 +384,25 @@ namespace Api.Controllers
         //}
 
         //blog detail i ceker
+        [HttpGet("getBlogMeta")]
+        public IActionResult getBlogMeta(int id)
+        {
+            var blog = _blogService.GetById(id, Status.Per.User);
+
+            if (blog.Success)
+            {
+                return Ok(new BlogMetaDto()
+                {
+                    BlogTitle = blog.Data.BlogTitle,
+                    BlogSummary = blog.Data.BlogSummary,
+                    BlogTitlePhotoUrl = blog.Data.BlogTitlePhotoUrl
+                });
+            }
+
+            return BadRequest();
+        }
+
+        //blog detail i ceker
         [HttpGet("getBlog")]
         [Authorize]
         public IActionResult GetBlog(int id)
@@ -100,7 +413,7 @@ namespace Api.Controllers
             if (blog.Success)
             {
                 _blogService.GetBlogView(blog.Data.Id, userId);
-                return Ok(blog.Data.ToDetail(_authorService.GetById(blog.Data.AuthorId), _blogService.GetTags(blog.Data.Id)));
+                return Ok(blog.Data.ToDetail(_userService.GetById(blog.Data.AuthorId, Status.Per.User), _blogService.GetTags(blog.Data.Id)));
             }
 
             return BadRequest();
@@ -114,7 +427,7 @@ namespace Api.Controllers
 
             if (blog.Success)
             {
-                return Ok(blog.Data.ToDetail(_authorService.GetById(blog.Data.AuthorId), _blogService.GetTags(blog.Data.Id)));
+                return Ok(blog.Data.ToDetail(_userService.GetById(blog.Data.AuthorId,Status.Per.UnUser), _blogService.GetTags(blog.Data.Id)));
             }
 
             return BadRequest();
@@ -128,7 +441,7 @@ namespace Api.Controllers
             var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var blog = _blogService.GetById(id, Status.Per.User);
 
-            var result = _blogService.GetHtmlBlog(blog.Data.ToDetail(_authorService.GetById(blog.Data.AuthorId), _blogService.GetTags(blog.Data.Id)), userId);
+            var result = _blogService.GetHtmlBlog(blog.Data.ToDetail(_userService.GetById(blog.Data.AuthorId,Status.Per.User), _blogService.GetTags(blog.Data.Id)), userId);
 
             if (result.Success)
             {
@@ -151,7 +464,7 @@ namespace Api.Controllers
         public ContentResult GetWebBlogGuest(int id)
         {
             var blog = _blogService.GetById(id, Status.Per.User);
-            var result = _blogService.GetHtmlBlog(blog.Data.ToDetail(_authorService.GetById(blog.Data.AuthorId), _blogService.GetTags(blog.Data.Id)));
+            var result = _blogService.GetHtmlBlog(blog.Data.ToDetail(_userService.GetById(blog.Data.AuthorId, Status.Per.UnUser), _blogService.GetTags(blog.Data.Id)));
 
             if (result.Success)
             {
@@ -223,7 +536,6 @@ namespace Api.Controllers
         [HttpPost("searchBlogsGuest")]
         public IActionResult searchBlogsGuest(List<string> text)
         {
-            var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             //object metadata;
             var result = _blogService.GetSearchList(text);
 
@@ -265,13 +577,13 @@ namespace Api.Controllers
             }
             commentResponses.Data.Insert(0, new CommentForBlog()
             {
-                UserId = mainComment.Data.UserId,
+                BlogId = mainComment.Data.BlogId,
                 CommentId = mainComment.Data.Id,
                 CommentDate = _dateTimeHelper.SetTime(mainComment.Data.CommentDate),
                 CommentResponse = 0,
                 Text = mainComment.Data.Text,
-                UserAvatarUrl = _userService.GetById(mainComment.Data.UserId,Status.Per.System).Data.ToDetail().AvatarUrl,
-                UserNickname = _userService.GetById(mainComment.Data.UserId, Status.Per.System).Data.ToDetail().Nickname
+
+                UserSummary = new UserSummaryDto() { Id = mainComment.Data.UserId, Nickname = _userService.GetById(mainComment.Data.UserId, Status.Per.System).Data.ToDetail().Nickname, AvatarUrl = _userService.GetById(mainComment.Data.UserId, Status.Per.System).Data.ToDetail().AvatarUrl }
             });
             //commentResponses.Data.Reverse();
             return Ok(commentResponses.Data);
@@ -348,7 +660,7 @@ namespace Api.Controllers
             else//yazara mail ayarlar
             {
 
-                var author = _authorService.GetById(blog.Data.AuthorId);
+                var author = _userService.GetById(blog.Data.AuthorId, Status.Per.System);
                 if (!author.Success)
                 {
                     return BadRequest(author);
@@ -366,7 +678,7 @@ namespace Api.Controllers
 
 
                 userNotifications.Header = "1 yeni yorum";
-                userNotifications.UserId = author.Data.UserId;
+                userNotifications.UserId = author.Data.Id;
                 userNotifications.IconUrl = "Images/" + user.Data.AvatarUrl;
                 userNotifications.Message = user.Data.Nickname + ": " + (addCommentForBlog.Text.Length > 200
                     ? addCommentForBlog.Text.Substring(0, 200)
@@ -452,6 +764,38 @@ namespace Api.Controllers
                 //return BadRequest(result.Message);
             }
 
+            return Ok(result);
+        }
+
+        //Kullanıcı görüntüle
+        [HttpGet("getUserComment")]
+        [Authorize]
+        public IActionResult getUserComment(int id, int pageId, int pageSize = 20)
+        {
+            if (pageSize > 40)
+                pageSize = 40;
+            if (pageSize < 1)
+                pageSize = 1;
+            --pageId;
+            //var me = _userService.GetById(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)), Status.Per.System).Data;
+            var user = _userService.GetById(id, Status.Per.User);
+            if (!user.Success)
+            {
+                return BadRequest(Messages.UserNotFound);
+            }
+
+            var blogComment = _blogCommentService.GetByUserId(user.Data.Id).Data.OrderByDescending(bc => bc.Id).Skip(pageId * pageSize).Take(pageSize);
+
+            var result = from c in blogComment
+                         select new CommentForBlog
+                         {
+                             CommentId = c.Id,
+                             BlogId = c.BlogId,
+                             CommentDate = _dateTimeHelper.SetTime(c.CommentDate),
+                             CommentResponse = _blogCommentService.GetByCommentResponse(c.Id).Data.Count,
+                             Text = c.Text,
+                             UserSummary = new UserSummaryDto() { Id = c.UserId, Nickname = _userService.GetById(c.UserId, Status.Per.System).Data.ToDetail().Nickname, AvatarUrl = _userService.GetById(c.UserId, Status.Per.System).Data.ToDetail().AvatarUrl }
+                         };
             return Ok(result);
         }
 

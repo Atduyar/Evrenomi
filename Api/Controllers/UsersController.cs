@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Api.Filters;
 using Business.Abstract;
 using Business.Constants;
+using DataAccess.Concrete.Filter;
 using Entities.Concrete;
 using Entities.Dtos;
 using Entities.Extensions;
@@ -26,20 +27,25 @@ namespace Api.Controllers
         private IUserService _userService;
         private IWebHostEnvironment _webHostEnvironment;
         private IUserNotificationService _userNotificationService;
+        private IBlogEmojiService _blogEmojiService;
+        private IBlogCommentService _blogCommentService;
+        private IBlogService _blogService;
 
-        public UsersController(IUserService userService, IWebHostEnvironment webHostEnvironment, IUserNotificationService userNotificationService)
+        public UsersController(IUserService userService, IWebHostEnvironment webHostEnvironment, IUserNotificationService userNotificationService, IBlogEmojiService blogEmojiService, IBlogCommentService blogCommentService, IBlogService blogService)
         {
             _userService = userService;
             _webHostEnvironment = webHostEnvironment;
             _userNotificationService = userNotificationService;
+            _blogEmojiService = blogEmojiService;
+            _blogCommentService = blogCommentService;
+            _blogService = blogService;
         }
 
-        //Kullanıcı görüntüle
         [HttpGet("getUser")]
         [Authorize]
         public IActionResult getUser(int id)
         {
-            var me = _userService.GetById(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)), Status.Per.System).Data;
+            //var me = _userService.GetById(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)), Status.Per.System).Data;
             var user = _userService.GetById(id, Status.Per.User);
             if (user.Success)
             {
@@ -49,7 +55,81 @@ namespace Api.Controllers
             return BadRequest(Messages.UserNotFound);
         }
 
-        //Benim Profilimi al
+        [HttpGet("getUserReaded")]
+        [Authorize]
+        public IActionResult getUserReaded(int id, int pageId, int pageSize = 20)
+        {
+            if (pageSize > 40)
+                pageSize = 40;
+            if (pageSize < 1)
+                pageSize = 1;
+            --pageId;
+
+            var pageFiliter = new BlogPageFilter();
+            pageFiliter.PageNumber = pageId;
+            pageFiliter.PageSize = pageSize;
+            //var me = _userService.GetById(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)), Status.Per.System).Data;
+            var user = _userService.GetById(id, Status.Per.User);
+            if (!user.Success)
+            {
+                return BadRequest(Messages.UserNotFound);
+            }
+
+            //var blogEmoji = _blogEmojiService.GetByUserIdAndEmojiId(user.Data.Id, 1).Data.OrderByDescending(be => be.Id).Select(be => be.BlogId).Skip(pageId * pageSize).Take(pageSize);
+            //var blogs = blogEmoji.Select(be => _blogService.GetById(be).Data);
+
+            var blogs = _blogService.GetByUserReaded(user.Data.Id, pageFiliter);
+            if (!blogs.Success)
+            {
+                return BadRequest(Messages.BlogNotFound);
+            }
+
+            return Ok(blogs.Data);
+        }
+
+        [HttpGet("getUserBlog")]
+        [Authorize]
+        public IActionResult getUserBlog(int id, int pageId, int pageSize = 20)
+        {
+            if (pageSize > 40)
+                pageSize = 40;
+            if (pageSize < 1)
+                pageSize = 1;
+            --pageId;
+
+            var pageFiliter = new BlogPageFilter();
+            pageFiliter.PageNumber = pageId;
+            pageFiliter.PageSize = pageSize;
+            //var me = _userService.GetById(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)), Status.Per.System).Data;
+            var user = _userService.GetById(id, Status.Per.User);
+            if (!user.Success)
+            {
+                return BadRequest(Messages.UserNotFound);
+            }
+
+
+            //var blogComment = _blogService.GetByAuthorId(pageFiliter, user.Data.Id, Status.Per.User).Data.OrderByDescending(b => b.Id).Skip(pageId * pageSize).Take(pageSize);
+            //var blogs = _blogService.GetByAuthorId(pageFiliter, user.Data.Id, Status.Per.User).Data.Select(b => b.ToSummary(user.Data.Nickname));
+            var blogs = _blogService.GetByAuthorId(user.Data.Id, pageFiliter, Status.Per.User).Data;
+            //.Select(b => b.ToSummary(user.Data.Nickname)).ToList();
+
+            return Ok(blogs);
+        }
+
+        [HttpGet("getUserByName")]
+        [Authorize]
+        public IActionResult getUserByName(string name)
+        {
+            //var me = _userService.GetById(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)), Status.Per.System).Data;
+            var user = _userService.GetByNickname(name, Status.Per.User);
+            if (user.Success)
+            {
+                return Ok(user.Data.ToDetail());
+            }
+
+            return BadRequest(Messages.UserNotFound);
+        }
+
         [HttpGet("getMyProfil")]
         [Authorize]
         public IActionResult getMyProfil()
@@ -68,7 +148,6 @@ namespace Api.Controllers
             return Ok(user.ToDetail());
         }
 
-        //Benim Profilimi al
         [HttpPost("updateUser")]
         [Authorize]
         public IActionResult updateUser(UserDetailsDto userPost)
@@ -84,7 +163,6 @@ namespace Api.Controllers
             return Ok(userPost);
         }
 
-        //Benim Profilimi al
         [Authorize]
         [HttpPost("updateUserPp"), DisableRequestSizeLimit]
         public IActionResult UpdateUserPp([FromForm] IFormFile objectFile)
@@ -140,7 +218,6 @@ namespace Api.Controllers
             }
         }
 
-        //
         [HttpGet("setOneSignalId")]
         [Authorize]
         public IActionResult SetOneSignalId(string oneSignalId)

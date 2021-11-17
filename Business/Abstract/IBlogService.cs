@@ -11,10 +11,13 @@ namespace Business.Abstract
     {
         IDataResult<string> GetHtmlBlog(BlogDetailDto blogDetailDto, int userId);
         IDataResult<string> GetHtmlBlog(BlogDetailDto blogDetailDto);
-        IDataResult<Blog> GetById(int blogId,Status.Per per = Status.Per.User);
+        IDataResult<Blog> GetById(int blogId, Status.Per per = Status.Per.User);
+        IDataResult<List<BlogSummaryDto>> GetByAuthorId(int authorId, PageFilter pageFilter, Status.Per per = Status.Per.User);
+        IDataResult<List<Blog>> GetByAuthorId(int authorId, Status.Per per = Status.Per.User);
         IDataResult<List<Blog>> GetByStatus(int mask, int filter);
+        IDataResult<List<BlogSummaryDto>> GetByUserReaded(int userId, PageFilter pageFilter, Status.Per per = Status.Per.User);
         IDataResult<List<Blog>> GetList();
-        IDataResult<List<Blog>> GetSearchList(List<string> text);
+        IDataResult<List<BlogSummaryDto>> GetSearchList(List<string> text, Status.Per per = Status.Per.User);
         IDataResult<List<BlogSummaryDto>> GetListSummary();
         IDataResult<List<Tag>> GetTags(int blogId);
         IDataResult<int> Add(Blog blog);

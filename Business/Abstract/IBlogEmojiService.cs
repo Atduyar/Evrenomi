@@ -10,6 +10,7 @@ namespace Business.Abstract
         IDataResult<List<BlogEmoji>> GetByBlogId(int blogId);
         IDataResult<List<BlogEmoji>> GetByUserId(int userId);
         IDataResult<List<BlogEmoji>> GetByEmojiId(int emojiId);
+        IDataResult<List<BlogEmoji>> GetByUserIdAndEmojiId(int userId, int emojiId);
         IDataResult<List<BlogEmoji>> GetList();
         IDataResult<BlogEmoji> GetByEmojiView(BlogEmojiView blogEmojiView);
         IResult Add(BlogEmoji blogEmoji);

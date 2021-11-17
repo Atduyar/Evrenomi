@@ -17,7 +17,9 @@ namespace Business.Constants
         public static string BlogUpdated = "Blog Güncellendi";
         public static string BlogDeleted = "Blog Silindi";
         public static string BlogNotFound = "Blog bulunamadı";
-        public static string BlogNotAccessible = "Blog erisebilir değil";
+        public static string BlogNotAccessible = "Blog erisebilir değil"; 
+        public static string BlogAlreadyPublish = "Blog zaten yayında.";
+        public static string BlogTitleEmpty = "Blog baslığı bos olamaz.";
         public static string UserRegistered = "Kullanıcı Kayıt Edildi";
         public static string UserNotFound = "Kullanıcı Bulunamadı";
         public static string UserUpdateBan = "Kullanıcı profil bilgilerinizi değistiremessinz banlısınız";
@@ -43,7 +45,7 @@ namespace Business.Constants
         public static string BlogCommentDeleted = "Yorum silindi";
         public static string BlogCommentNotFound = "Yorum bulunamadı";
         public static string BlogTagAdded = "BlogTag eklendi";
-        public static string BlogTagUpdated = "BlogTag güncellendi";
+        public static string BlogTagUpdated = "BlogTag güncellendi"; 
         public static string BlogTagDeleted = "BlogTag silindi";
         public static string TagAdded = "Tag eklendi";
         public static string TagUpdated = "Tag güncellendi";
