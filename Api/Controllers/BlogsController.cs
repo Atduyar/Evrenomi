@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-////blog detail i ceker
+//
 ////Blogları listeler
 
 namespace Api.Controllers
@@ -344,7 +344,7 @@ namespace Api.Controllers
 
             return Ok(result);
         }
-        //blog detail i ceker
+        
         //[HttpGet("getBlogView")]
         //[Authorize]
         //public IActionResult GetBlogView(int id)
@@ -365,7 +365,7 @@ namespace Api.Controllers
         //    return BadRequest();
         //}
 
-        ////blog detail i ceker
+        //
         //[HttpGet("getBlogViewGuest")]
         //public IActionResult GetBlogViewGuest(int id)
         //{
@@ -383,7 +383,7 @@ namespace Api.Controllers
         //    return BadRequest();
         //}
 
-        //blog detail i ceker
+        
         [HttpGet("getBlogMeta")]
         public IActionResult getBlogMeta(int id)
         {
@@ -402,7 +402,7 @@ namespace Api.Controllers
             return BadRequest();
         }
 
-        //blog detail i ceker
+        
         [HttpGet("getBlog")]
         [Authorize]
         public IActionResult GetBlog(int id)
@@ -419,7 +419,6 @@ namespace Api.Controllers
             return BadRequest();
         }
 
-        //blog detail i ceker
         [HttpGet("getBlogGuest")]
         public IActionResult GetBlogGuest(int id)
         {
@@ -433,7 +432,7 @@ namespace Api.Controllers
             return BadRequest();
         }
 
-        //blog detail i ceker
+        
         [HttpGet("getWebBlog")]
         [Authorize]
         public ContentResult GetWebBlog(int id)
@@ -459,7 +458,7 @@ namespace Api.Controllers
             };
         }
 
-        //blog detail i ceker
+        
         [HttpGet("getWebBlogGuest")]
         public ContentResult GetWebBlogGuest(int id)
         {
@@ -544,7 +543,7 @@ namespace Api.Controllers
             return Ok(result.Data);
         }
 
-        //blog detail i ceker
+        
         [HttpGet("getBlogComment")]
         public IActionResult GetBlogComment(int blogId)
         {

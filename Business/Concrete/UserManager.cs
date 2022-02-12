@@ -71,7 +71,6 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(_userDal.Get(u => u.Nickname == nickname));
         }
 
-
         public IDataResult<User> GetByNickname(string nickname, Status.Per per)
         {
             User user;

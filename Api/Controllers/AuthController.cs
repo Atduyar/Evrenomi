@@ -41,7 +41,7 @@ namespace Api.Controllers
             var result = _authService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
             return BadRequest(new ErrorResponseDto {Operation = System.Reflection.MethodBase.GetCurrentMethod().Name, ErrorMessages = result.Message});
@@ -67,7 +67,7 @@ namespace Api.Controllers
             var result = _authService.CreateAccessToken(registerResult.Data);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
             return BadRequest(result);
         }
@@ -79,11 +79,12 @@ namespace Api.Controllers
             if (userExistsNickname.Success)
             {
                 //return BadRequest(userExistsNickname);
-                return BadRequest("Bu nickname zaten kayıtlı");
+                return BadRequest(new ErrorResult(message: userExistsNickname.Message));
             }
 
-            return Ok();
+            return Ok(new SuccessResult(message: userExistsNickname.Message));
         }
+
         [HttpGet("emailControl")]
         public IActionResult EmailControl(string data)
         {
@@ -91,10 +92,10 @@ namespace Api.Controllers
             if (userExistsEmail.Success)
             {
                 //return BadRequest(userExistsEmail);
-                return BadRequest("Bu eposta zaten kayıtlı");
+                return BadRequest(new ErrorResult(message: userExistsEmail.Message));
             }
 
-            return Ok();
+            return Ok(new SuccessResult(message: userExistsEmail.Message));
         }
     }
 }

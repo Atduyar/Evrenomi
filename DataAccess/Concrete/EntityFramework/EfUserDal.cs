@@ -13,8 +13,8 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new VikingContext())
             {
-                var result = from operationClaim in context.OperationClaims
-                    join userOperationClaim in context.UserOperationClaims
+                var result = from operationClaim in context.operationclaims
+                    join userOperationClaim in context.useroperationclaims
                         on operationClaim.Id equals userOperationClaim.OperationClaimId
                     where userOperationClaim.UserId == user.Id
                     select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };

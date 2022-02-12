@@ -62,8 +62,8 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new VikingContext())
             {
-                var result = from tag in context.Tags
-                    join blogTag in context.BlogTags
+                var result = from tag in context.tags
+                    join blogTag in context.blogtags
                         on tag.Id equals blogTag.TagId
                     where blogTag.BlogId == blogId
                              select new Tag { Id = tag.Id, Name = tag.Name };

@@ -56,7 +56,7 @@ namespace Business.Concrete
         {
             if (_userService.GetByEmailOrNickname(emailOrNickname).Data == null)
             {
-                return new ErrorResult();
+                return new ErrorResult(Messages.UserNotFound);
             }
             return new SuccessResult(Messages.UserAlreadyExists);
         }

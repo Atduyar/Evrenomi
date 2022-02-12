@@ -90,7 +90,7 @@ namespace Api
                 RequestPath = new PathString("/wwwroot")
             });
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 

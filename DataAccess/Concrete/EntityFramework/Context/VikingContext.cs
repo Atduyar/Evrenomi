@@ -14,18 +14,18 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;initial catalog=Northwind;integrated security=true");
         }
 
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<OperationClaim> OperationClaims { get; set; }
-        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
-        public DbSet<BlogComment> BlogComments { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<BlogTag> BlogTags { get; set; }
-        public DbSet<BlogEmoji> Blogemojis { get; set; }
-        public DbSet<BlogEmojiView> Blogemoji_views { get; set; }
-        public DbSet<BlogEmojiViewView> Blogemojiview_views { get; set; }
-        public DbSet<BlogEmojiCountView> Blogemojicount_views { get; set; }
-        public DbSet<UserNotification> UserNotifications { get; set; }
+        public DbSet<Blog> blogs { get; set; }
+        public DbSet<User> users { get; set; }
+        public DbSet<OperationClaim> operationclaims { get; set; }
+        public DbSet<UserOperationClaim> useroperationclaims { get; set; }
+        public DbSet<BlogComment> blogcomments { get; set; }
+        public DbSet<Tag> tags { get; set; }
+        public DbSet<BlogTag> blogtags { get; set; }
+        public DbSet<BlogEmoji> blogemojis { get; set; }
+        public DbSet<BlogEmojiView> blogemoji_views { get; set; }
+        public DbSet<BlogEmojiViewView> blogemojiview_views { get; set; }
+        public DbSet<BlogEmojiCountView> blogemojicount_views { get; set; }
+        public DbSet<UserNotification> usernotifications { get; set; }
 
         //public DbSet<User> Users { get; set; }
         //public DbSet<OperationClaim> OperationClaims { get; set; }
