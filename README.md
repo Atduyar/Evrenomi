@@ -1,4 +1,4 @@
-### Hi there, I'm Ahmet Tarık DUYAR [Atduyar](https://api.atduyar.com/api/tests/getComment) 👋
+### Hi there, I'm Ahmet Tarık DUYAR [Evrenomi](https://api.evrenomi.com/api/tests/getComment) 👋
 
 ## Api Methods
 
